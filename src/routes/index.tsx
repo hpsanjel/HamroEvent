@@ -10,6 +10,10 @@ import {
   ArrowRight,
   Zap,
   CheckCircle2,
+  Ticket,
+  CreditCard,
+  Upload,
+  Search,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { InstallPrompt } from "@/components/install-prompt";
@@ -33,6 +37,10 @@ const features = [
   { icon: Trophy, title: "Event CRUD", text: "Create, publish and manage tournaments in seconds." },
   { icon: QrCode, title: "Share via QR", text: "One-tap share to social + scannable QR for instant registration." },
   { icon: Users, title: "Team registration", text: "Public form captures team, players, payment proof — admin approves." },
+  { icon: Upload, title: "Payment proof", text: "Teams upload payment screenshots, organizers approve with one click." },
+  { icon: Ticket, title: "Event passes", text: "Generate free or paid passes with QR codes for attendees." },
+  { icon: CreditCard, title: "Ticket management", text: "Sell, track and validate tickets with integrated QR scanning." },
+  { icon: Search, title: "Ticket lookup", text: "Public can track their ticket status online using order ID or phone." },
   { icon: CalendarRange, title: "Auto bracket", text: "Generate single-elimination tie sheet from approved teams." },
   { icon: Wallet, title: "Budget tracker", text: "Income, expenses, prize pool — see the bottom line live." },
   { icon: HeartHandshake, title: "Donations & sponsors", text: "Log every contribution with totals." },
@@ -87,12 +95,9 @@ function Landing() {
                   Get started <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
-              <Button asChild size="lg" variant="outline">
-                <Link to="/login">Sign in</Link>
-              </Button>
             </div>
             <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
-              {["Free to use", "Installable PWA", "No signup required"].map((t) => (
+              {["Free to use", "Installable PWA", "Organizer sign-in"].map((t) => (
                 <div key={t} className="flex items-center gap-1.5">
                   <CheckCircle2 className="h-4 w-4 text-primary" />
                   {t}

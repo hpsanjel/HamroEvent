@@ -129,13 +129,13 @@ function OrderLookup() {
         {searched && (
           <div className="mt-6">
             {!order ? (
-              <div className="rounded-2xl border border-dashed border-border bg-card/40 p-12 text-center">
+              <div className="rounded-2xl border border-dashed border-border bg-card/40 p-12 md:text-center">
                 <Ticket className="mx-auto h-12 w-12 text-muted-foreground" />
                 <h2 className="mt-4 font-display text-xl font-semibold">Order Not Found</h2>
                 <p className="mt-2 text-sm text-muted-foreground">
                   We couldn't find an order with that code. Please check:
                 </p>
-                <ul className="mt-2 text-sm text-muted-foreground text-left space-y-1">
+                <ul className="mt-2 text-sm text-muted-foreground md:text-center space-y-1">
                   <li>• You're entering the 8-character code (without #)</li>
                   <li>• The code matches what was shown after purchase</li>
                   <li>• Your payment was submitted successfully</li>
@@ -143,7 +143,7 @@ function OrderLookup() {
                 <p className="mt-3 text-sm text-muted-foreground">
                   If you recently made a purchase, please wait a few minutes and try again.
                 </p>
-                <div className="mt-4 flex justify-center">
+                <div className="mt-4 flex justify-center md:justify-start">
                   <Button variant="outline" size="sm" onClick={() => {
                     setSearched(false);
                     setOrderCode("");
