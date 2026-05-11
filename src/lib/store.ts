@@ -608,7 +608,18 @@ export const regsApi = {
   list: (eventId?: string): TeamRegistration[] => {
     console.log('[regsApi] list() called, eventId:', eventId, 'cache.regs.length:', cache.regs.length);
     const all = [...cache.regs].sort((a, b) => b.submittedAt.localeCompare(a.submittedAt));
-    const filtered = eventId ? all.filter((r) => r.eventId === eventId) : all;
+    
+    // Filter by event ID if provided
+    let filtered = eventId ? all.filter((r) => r.eventId === eventId) : all;
+    
+    // When authed, only show registrations for events owned by current user
+    if (currentUserId) {
+      filtered = filtered.filter((r) => {
+        const event = cache.events.find((e) => e.id === r.eventId);
+        return event?.ownerId === currentUserId;
+      });
+    }
+    
     console.log('[regsApi] Filtered registrations:', filtered.length);
     return filtered;
   },
@@ -730,7 +741,17 @@ export const ticketsApi = {
 export const ordersApi = {
   list: (eventId?: string) => {
     const arr = [...cache.orders].sort((a, b) => b.submittedAt.localeCompare(a.submittedAt));
-    return eventId ? arr.filter((o) => o.eventId === eventId) : arr;
+    let filtered = eventId ? arr.filter((o) => o.eventId === eventId) : arr;
+    
+    // When authed, only show orders for events owned by current user
+    if (currentUserId) {
+      filtered = filtered.filter((o) => {
+        const event = cache.events.find((e) => e.id === o.eventId);
+        return event?.ownerId === currentUserId;
+      });
+    }
+    
+    return filtered;
   },
   countSold: (ticketId: string) =>
     cache.orders

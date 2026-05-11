@@ -160,4 +160,351 @@
       linear-gradient(90deg, oklch(0.3 0.04 252 / 0.4) 1px, transparent 1px);
     background-size: 40px 40px;
   }
+
+  /* Accessibility Classes */
+  
+  /* High Contrast Mode */
+  .high-contrast {
+    --background: oklch(0.05 0 0);
+    --foreground: oklch(1 0 0);
+    --card: oklch(0.1 0 0);
+    --card-foreground: oklch(1 0 0);
+    --popover: oklch(0.1 0 0);
+    --popover-foreground: oklch(1 0 0);
+    --primary: oklch(1 0 0);
+    --primary-foreground: oklch(0.05 0 0);
+    --secondary: oklch(0.2 0 0);
+    --secondary-foreground: oklch(1 0 0);
+    --muted: oklch(0.15 0 0);
+    --muted-foreground: oklch(0.8 0 0);
+    --accent: oklch(0.3 0 0);
+    --accent-foreground: oklch(1 0 0);
+    --destructive: oklch(1 0.3 0);
+    --destructive-foreground: oklch(0.05 0 0);
+    --border: oklch(0.3 0 0);
+    --input: oklch(0.2 0 0);
+    --ring: oklch(1 0 0);
+  }
+
+  /* Large Text Mode */
+  .large-text {
+    font-size: 120% !important;
+    line-height: 1.6 !important;
+  }
+
+  .large-text h1 { font-size: 2.5rem !important; }
+  .large-text h2 { font-size: 2rem !important; }
+  .large-text h3 { font-size: 1.75rem !important; }
+  .large-text h4 { font-size: 1.5rem !important; }
+  .large-text h5 { font-size: 1.25rem !important; }
+  .large-text h6 { font-size: 1.125rem !important; }
+
+  /* Hide Images Mode */
+  .hide-images img,
+  .hide-images svg:not([role="img"]):not([data-lucide]),
+  .hide-images [role="img"] {
+    display: none !important;
+  }
+
+  .hide-images img::after,
+  .hide-images [role="img"]::after {
+    content: "[Image]";
+    display: inline-block;
+    background: var(--muted);
+    color: var(--muted-foreground);
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+  }
+
+  /* Grayscale Mode */
+  .grayscale {
+    filter: grayscale(100%) !important;
+  }
+
+  .grayscale * {
+    filter: grayscale(100%) !important;
+  }
+
+  /* Light Mode - Override the current dark theme */
+  :root.dark-mode {
+    --background: oklch(1 0.01 250) !important;
+    --foreground: oklch(0.05 0.03 250) !important;
+    --card: oklch(0.98 0.01 250) !important;
+    --card-foreground: oklch(0.05 0.03 250) !important;
+    --popover: oklch(0.98 0.01 250) !important;
+    --popover-foreground: oklch(0.05 0.03 250) !important;
+    --primary: oklch(0.18 0.03 250) !important;
+    --primary-foreground: oklch(1 0.01 250) !important;
+    --secondary: oklch(0.93 0.02 250) !important;
+    --secondary-foreground: oklch(0.05 0.03 250) !important;
+    --muted: oklch(0.9 0.02 250) !important;
+    --muted-foreground: oklch(0.3 0.04 252) !important;
+    --accent: oklch(0.85 0.03 250) !important;
+    --accent-foreground: oklch(0.05 0.03 250) !important;
+    --destructive: oklch(0.65 0.24 25) !important;
+    --destructive-foreground: oklch(1 0.01 250) !important;
+    --border: oklch(0.85 0.04 252) !important;
+    --input: oklch(0.9 0.04 252) !important;
+    --ring: oklch(0.18 0.03 250) !important;
+    /* Sidebar specific colors for light mode */
+    --sidebar-background: oklch(0.95 0.01 250) !important;
+    --sidebar-foreground: oklch(0.05 0.03 250) !important;
+    --sidebar-primary: oklch(0.18 0.03 250) !important;
+    --sidebar-primary-foreground: oklch(1 0.01 250) !important;
+    --sidebar-secondary: oklch(0.9 0.02 250) !important;
+    --sidebar-secondary-foreground: oklch(0.05 0.03 250) !important;
+    --sidebar-accent: oklch(0.85 0.03 250) !important;
+    --sidebar-accent-foreground: oklch(0.05 0.03 250) !important;
+    --sidebar-border: oklch(0.8 0.04 252) !important;
+    --sidebar-ring: oklch(0.18 0.03 250) !important;
+  }
+
+  /* Force sidebar background in light mode with more specific selectors */
+  :root.dark-mode .sidebar,
+  :root.dark-mode [data-sidebar="sidebar"],
+  :root.dark-mode [data-state="open"] {
+    background-color: oklch(0.95 0.01 250) !important;
+    background: oklch(0.95 0.01 250) !important;
+  }
+
+  :root.dark-mode .sidebar-content,
+  :root.dark-mode .sidebar-header,
+  :root.dark-mode .sidebar-footer,
+  :root.dark-mode .sidebar-group {
+    background-color: oklch(0.95 0.01 250) !important;
+    background: oklch(0.95 0.01 250) !important;
+  }
+
+  /* Target any element with sidebar class */
+  :root.dark-mode [class*="sidebar"],
+  :root.dark-mode [class*="Sidebar"] {
+    background-color: oklch(0.95 0.01 250) !important;
+    background: oklch(0.95 0.01 250) !important;
+  }
+
+  /* Hover effects for sidebar items in light mode */
+  :root.dark-mode .sidebar-menu-button:hover,
+  :root.dark-mode [class*="sidebar-menu-button"]:hover,
+  :root.dark-mode [class*="SidebarMenuButton"]:hover {
+    background-color: oklch(0.85 0.03 250) !important;
+    background: oklch(0.85 0.03 250) !important;
+  }
+
+  :root.dark-mode .sidebar-menu-item:hover,
+  :root.dark-mode [class*="sidebar-menu-item"]:hover,
+  :root.dark-mode [class*="SidebarMenuItem"]:hover {
+    background-color: oklch(0.85 0.03 250) !important;
+    background: oklch(0.85 0.03 250) !important;
+  }
+
+  /* Active/hover state for sidebar links */
+  :root.dark-mode .sidebar a:hover,
+  :root.dark-mode [class*="sidebar"] a:hover {
+    background-color: oklch(0.85 0.03 250) !important;
+  }
+
+  :root.dark-mode .sidebar-menu-button[data-active="true"],
+  :root.dark-mode [class*="sidebar-menu-button"][data-active="true"] {
+    background-color: oklch(0.8 0.03 250) !important;
+  }
+
+  /* Removed white text styling for features section heading - keep normal colors */
+
+  /* Keep CTA section text black in both modes */
+  .bg-gradient-stadium h2,
+  .bg-gradient-stadium .font-display {
+    color: black !important;
+  }
+
+  .bg-gradient-stadium p {
+    color: black !important;
+  }
+
+  .bg-gradient-stadium .text-primary-foreground {
+    color: black !important;
+  }
+
+  .bg-gradient-stadium .text-primary-foreground\/80 {
+    color: black !important;
+    opacity: 0.8 !important;
+  }
+
+  /* Light background for features section in light mode */
+  :root.dark-mode .bg-gradient-pitch {
+    background-color: oklch(0.95 0.01 250) !important;
+    background: oklch(0.95 0.01 250) !important;
+  }
+
+  /* Fix accessibility toggle buttons for both modes */
+  /* Light mode - make less black */
+  :root.dark-mode .switch,
+  :root.dark-mode [role="switch"] {
+    background-color: oklch(0.7 0.05 250) !important;
+  }
+
+  :root.dark-mode [data-state="checked"] {
+    background-color: oklch(0.5 0.15 250) !important;
+  }
+
+  :root.dark-mode .switch-thumb,
+  :root.dark-mode [data-state="unchecked"] .switch-thumb {
+    background-color: oklch(0.95 0.02 250) !important;
+  }
+
+  :root.dark-mode [data-state="checked"] .switch-thumb {
+    background-color: oklch(1 0.01 250) !important;
+  }
+
+  /* Redesigned toggle layout - more specific selectors */
+  html body:not(.dark-mode) [data-radix-switch],
+  html body:not(.dark-mode) .switch,
+  html body:not(.dark-mode) [role="switch"],
+  html body:not(.dark-mode) [data-orientation="horizontal"],
+  html body:not(.dark-mode) [class*="switch"] {
+    background-color: oklch(0.2 0.05 250) !important;
+    opacity: 0.8 !important;
+    position: relative !important;
+  }
+
+  html body:not(.dark-mode) [data-radix-switch][data-state="checked"],
+  html body:not(.dark-mode) [data-state="checked"],
+  html body:not(.dark-mode) [data-orientation="horizontal"][data-state="checked"],
+  html body:not(.dark-mode) [class*="switch"][data-state="checked"] {
+    background-color: var(--primary) !important;
+    opacity: 1 !important;
+    box-shadow: 0 0 10px oklch(0.6 0.3 25) !important;
+  }
+
+  html body:not(.dark-mode) [data-radix-switch] span,
+  html body:not(.dark-mode) .switch-thumb,
+  html body:not(.dark-mode) [data-state="unchecked"] .switch-thumb,
+  html body:not(.dark-mode) [data-orientation="horizontal"][data-state="unchecked"] > span {
+    background-color: oklch(0.8 0.05 250) !important;
+    transform: translateX(0) !important;
+    left: 3px !important;
+    width: 16px !important;
+    height: 16px !important;
+    top: 50% !important;
+    margin-top: -8px !important;
+  }
+
+  html body:not(.dark-mode) [data-radix-switch][data-state="checked"] span,
+  html body:not(.dark-mode) [data-state="checked"] .switch-thumb,
+  html body:not(.dark-mode) [data-orientation="horizontal"][data-state="checked"] > span {
+    background-color: white !important;
+    transform: translateX(calc(100% - 19px)) !important;
+    left: 3px !important;
+    width: 16px !important;
+    height: 16px !important;
+    top: 50% !important;
+    margin-top: -8px !important;
+  }
+
+  /* Also apply same design to light mode */
+  html :root.dark-mode [data-radix-switch],
+  html :root.dark-mode .switch,
+  html :root.dark-mode [role="switch"],
+  html :root.dark-mode [data-orientation="horizontal"],
+  html :root.dark-mode [class*="switch"],
+  html :root.dark-mode div[data-radix-switch],
+  html :root.dark-mode span[data-radix-switch],
+  html :root.dark-mode button[data-radix-switch] {
+    background-color: oklch(0.7 0.05 250) !important;
+    border: 2px solid oklch(0.8 0.05 250) !important;
+    opacity: 1 !important;
+    position: relative !important;
+    min-height: 24px !important;
+    min-width: 44px !important;
+  }
+
+  html :root.dark-mode [data-radix-switch][data-state="checked"],
+  html :root.dark-mode [data-state="checked"],
+  html :root.dark-mode [data-orientation="horizontal"][data-state="checked"],
+  html :root.dark-mode [class*="switch"][data-state="checked"] {
+    background-color: var(--primary) !important;
+    opacity: 1 !important;
+    box-shadow: 0 0 10px oklch(0.6 0.3 25) !important;
+  }
+
+  html :root.dark-mode [data-radix-switch] span,
+  html :root.dark-mode .switch-thumb,
+  html :root.dark-mode [data-state="unchecked"] .switch-thumb,
+  html :root.dark-mode [data-orientation="horizontal"][data-state="unchecked"] > span {
+    background-color: oklch(0.8 0.05 250) !important;
+    transform: translateX(0) !important;
+    left: 3px !important;
+    width: 16px !important;
+    height: 16px !important;
+    top: 50% !important;
+    margin-top: -8px !important;
+  }
+
+  html :root.dark-mode [data-radix-switch][data-state="checked"] span,
+  html :root.dark-mode [data-state="checked"] .switch-thumb,
+  html :root.dark-mode [data-orientation="horizontal"][data-state="checked"] > span {
+    background-color: white !important;
+    transform: translateX(calc(100% - 19px)) !important;
+    left: 3px !important;
+    width: 16px !important;
+    height: 16px !important;
+    top: 50% !important;
+    margin-top: -8px !important;
+  }
+
+  /* Reduced Motion */
+  .reduced-motion *,
+  .reduced-motion *::before,
+  .reduced-motion *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Enhanced Focus */
+  .focus-visible *:focus,
+  .focus-visible *:focus-visible {
+    outline: 3px solid var(--ring) !important;
+    outline-offset: 2px !important;
+  }
+
+  .focus-visible button:focus,
+  .focus-visible button:focus-visible,
+  .focus-visible input:focus,
+  .focus-visible input:focus-visible,
+  .focus-visible textarea:focus,
+  .focus-visible textarea:focus-visible,
+  .focus-visible select:focus,
+  .focus-visible select:focus-visible {
+    outline: 3px solid var(--ring) !important;
+    outline-offset: 2px !important;
+    box-shadow: 0 0 0 3px var(--ring) !important;
+  }
+
+  /* Accessibility widget specific styles */
+  .accessibility-widget {
+    position: fixed !important;
+    bottom: 1.5rem !important;
+    right: 1.5rem !important;
+    z-index: 9999 !important;
+  }
+
+  .accessibility-widget button {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  /* High contrast specific improvements */
+  .high-contrast .accessibility-widget {
+    border: 2px solid var(--foreground);
+  }
+
+  .high-contrast button,
+  .high-contrast input,
+  .high-contrast select,
+  .high-contrast textarea {
+    border: 2px solid var(--foreground) !important;
+  }
 }

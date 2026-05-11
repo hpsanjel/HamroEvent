@@ -1,5 +1,6 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 import { Toaster } from "@/components/ui/sonner";
+import AccessibilityWidget from "@/components/accessibility-widget";
 import appCss from "../styles.css?url";
 
 function NotFoundComponent() {
@@ -61,7 +62,7 @@ export const Route = createRootRoute({
 
 function RootShell({ children }: { children: React.ReactNode }) {
   return (
-    <div className="dark">
+    <div>
       {children}
     </div>
   );
@@ -72,6 +73,7 @@ function RootComponent() {
     <>
       <Outlet />
       <Toaster position="top-right" theme="dark" />
+      <AccessibilityWidget />
     </>
   );
 }

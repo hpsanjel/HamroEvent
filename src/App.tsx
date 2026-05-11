@@ -18,6 +18,8 @@ import { fmtMoney, currencySymbol } from "@/lib/currency";
 import { uploadEventBanner } from "@/lib/image-upload";
 import { generateBracket } from "@/lib/match-scheduler";
 import { uid } from "@/lib/store";
+import AccessibilityWidget from "@/components/accessibility-widget";
+import AccessibilityTest from "@/components/accessibility-test";
 
 export default function App() {
   useStoreSignal();
@@ -139,6 +141,13 @@ export default function App() {
 
       {/* Main Content */}
       <main className="flex-1">
+        {/* Accessibility Test Section */}
+        <section className="border-b border-border">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 py-6">
+            <AccessibilityTest />
+          </div>
+        </section>
+        
         {/* Sidebar */}
         <aside className="w-80 border-r border-border bg-card">
           <div className="p-4">
@@ -296,9 +305,8 @@ export default function App() {
                             </span>
                           </div>
                         </div>
-                      </div>
-                    </CardContent>
-                  </Card>
+                      </CardContent>
+                    </Card>
                 ))}
               </div>
             </div>
@@ -459,6 +467,7 @@ export default function App() {
           </div>
         </DialogContent>
       </Dialog>
+      <AccessibilityWidget />
     </div>
   );
 }
