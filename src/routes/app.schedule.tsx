@@ -4,9 +4,11 @@ import { eventsApi, regsApi, matchesApi, generateBracket, type Match } from "@/l
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Shuffle, Trophy, Calendar, AlertTriangle, Radio, Flag } from "lucide-react";
+import { Shuffle, Trophy, Calendar, AlertTriangle, Radio, Flag, Download } from "lucide-react";
 import { toast } from "sonner";
 import { format } from "date-fns";
+import { fmtMoney } from "@/lib/currency";
+import jsPDF from "jspdf";
 
 export const Route = createFileRoute("/app/schedule")({
   validateSearch: (s: Record<string, unknown>) => ({ event: (s.event as string) || "" }),
@@ -60,6 +62,74 @@ function SchedulePage() {
     toast.success(`Bracket generated for ${teams.length} teams`);
   }
 
+  function exportTieSheet() {
+    if (!event || matches.length === 0) {
+      toast.error("No matches to export");
+      return;
+    }
+
+    try {
+      let content = `TIE SHEET: ${event.name}\n`;
+      content += "=".repeat(50) + "\n";
+      content += `Generated: ${format(new Date(), "PPP")}\n`;
+      content += `Sport: ${event.sport}\n`;
+      content += `Venue: ${event.venue}\n`;
+      content += `Dates: ${format(new Date(event.startDate), "PPP")} - ${format(new Date(event.endDate), "PPP")}\n\n`;
+
+      rounds.forEach((rnd) => {
+        const total = rounds.length;
+        const label = rnd === total ? "Final" : rnd === total - 1 ? "Semi-finals" : rnd === total - 2 ? "Quarter-finals" : `Round ${rnd}`;
+        const rmatches = matches.filter((m) => m.round === rnd);
+        
+        content += `${label.toUpperCase()}\n`;
+        content += "-".repeat(label.length + 10) + "\n";
+        
+        rmatches.forEach((m, index) => {
+          content += `\nMatch ${m.matchNo}: ${m.teamA || 'TBD'} vs ${m.teamB || 'TBD'}\n`;
+          if (m.scheduledAt) {
+            content += `  Time: ${format(new Date(m.scheduledAt), "MMM d, yyyy 'at' HH:mm")}\n`;
+          }
+          if (m.venue) {
+            content += `  Venue: ${m.venue}\n`;
+          }
+          if (m.scoreA !== undefined && m.scoreB !== undefined) {
+            content += `  Score: ${m.scoreA} - ${m.scoreB}\n`;
+          }
+          if (m.winner) {
+            content += `  Winner: ${m.winner}\n`;
+          }
+          content += `  Status: ${m.status}\n`;
+        });
+        content += "\n";
+      });
+
+      // Generate PDF
+      const pdf = new jsPDF();
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const margin = 20;
+      const lineHeight = 7;
+      const maxWidth = pageWidth - 2 * margin;
+      
+      const lines = pdf.splitTextToSize(content, maxWidth);
+      
+      let yPosition = margin;
+      
+      lines.forEach((line: string) => {
+        if (yPosition > pdf.internal.pageSize.getHeight() - margin) {
+          pdf.addPage();
+          yPosition = margin;
+        }
+        pdf.text(line, margin, yPosition);
+        yPosition += lineHeight;
+      });
+      
+      pdf.save(`tie-sheet-${event.name}-${format(new Date(), "yyyy-MM-dd")}.pdf`);
+      toast.success("Tie sheet exported successfully!");
+    } catch (error) {
+      toast.error("Failed to export tie sheet");
+    }
+  }
+
   function updateMatch(m: Match, patch: Partial<Match>) {
     const next = { ...m, ...patch };
     if (typeof next.scoreA === "number" && typeof next.scoreB === "number") {
@@ -94,9 +164,16 @@ function SchedulePage() {
             </SelectContent>
           </Select>
           {event && (
-            <Button onClick={generate} className="w-full sm:w-auto">
-              <Shuffle className="mr-1 h-4 w-4" /> {matches.length ? "Regenerate" : "Generate"}
-            </Button>
+            <>
+              <Button onClick={generate} className="w-full sm:w-auto">
+                <Shuffle className="mr-1 h-4 w-4" /> {matches.length ? "Regenerate" : "Generate"}
+              </Button>
+              {matches.length > 0 && (
+                <Button onClick={exportTieSheet} variant="outline" className="w-full sm:w-auto">
+                  <Download className="mr-1 h-4 w-4" /> Export Tie Sheet
+                </Button>
+              )}
+            </>
           )}
         </div>
       </div>

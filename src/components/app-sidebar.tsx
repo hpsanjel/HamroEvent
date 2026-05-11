@@ -9,6 +9,7 @@ import {
   ScanLine,
   Sparkles,
   Ticket,
+  Download,
 } from "lucide-react";
 import {
   Sidebar,
@@ -33,6 +34,7 @@ const mainNav = [
   { title: "Donations", url: "/app/donations", icon: HeartHandshake },
   { title: "Tickets", url: "/app/tickets", icon: Ticket },
   { title: "Check-in", url: "/app/checkin", icon: ScanLine },
+  { title: "Export", url: "/app/export", icon: Download },
 ];
 
 export function AppSidebar() {

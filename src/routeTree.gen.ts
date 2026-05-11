@@ -19,6 +19,7 @@ import { Route as RegisterEventIdRouteImport } from './routes/register.$eventId'
 import { Route as AppTicketsRouteImport } from './routes/app.tickets'
 import { Route as AppScheduleRouteImport } from './routes/app.schedule'
 import { Route as AppRegistrationsRouteImport } from './routes/app.registrations'
+import { Route as AppExportRouteImport } from './routes/app.export'
 import { Route as AppDonationsRouteImport } from './routes/app.donations'
 import { Route as AppCheckinRouteImport } from './routes/app.checkin'
 import { Route as AppBudgetRouteImport } from './routes/app.budget'
@@ -75,6 +76,11 @@ const AppRegistrationsRoute = AppRegistrationsRouteImport.update({
   path: '/registrations',
   getParentRoute: () => AppRoute,
 } as any)
+const AppExportRoute = AppExportRouteImport.update({
+  id: '/export',
+  path: '/export',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppDonationsRoute = AppDonationsRouteImport.update({
   id: '/donations',
   path: '/donations',
@@ -109,6 +115,7 @@ export interface FileRoutesByFullPath {
   '/app/budget': typeof AppBudgetRoute
   '/app/checkin': typeof AppCheckinRoute
   '/app/donations': typeof AppDonationsRoute
+  '/app/export': typeof AppExportRoute
   '/app/registrations': typeof AppRegistrationsRoute
   '/app/schedule': typeof AppScheduleRoute
   '/app/tickets': typeof AppTicketsRoute
@@ -125,6 +132,7 @@ export interface FileRoutesByTo {
   '/app/budget': typeof AppBudgetRoute
   '/app/checkin': typeof AppCheckinRoute
   '/app/donations': typeof AppDonationsRoute
+  '/app/export': typeof AppExportRoute
   '/app/registrations': typeof AppRegistrationsRoute
   '/app/schedule': typeof AppScheduleRoute
   '/app/tickets': typeof AppTicketsRoute
@@ -143,6 +151,7 @@ export interface FileRoutesById {
   '/app/budget': typeof AppBudgetRoute
   '/app/checkin': typeof AppCheckinRoute
   '/app/donations': typeof AppDonationsRoute
+  '/app/export': typeof AppExportRoute
   '/app/registrations': typeof AppRegistrationsRoute
   '/app/schedule': typeof AppScheduleRoute
   '/app/tickets': typeof AppTicketsRoute
@@ -162,6 +171,7 @@ export interface FileRouteTypes {
     | '/app/budget'
     | '/app/checkin'
     | '/app/donations'
+    | '/app/export'
     | '/app/registrations'
     | '/app/schedule'
     | '/app/tickets'
@@ -178,6 +188,7 @@ export interface FileRouteTypes {
     | '/app/budget'
     | '/app/checkin'
     | '/app/donations'
+    | '/app/export'
     | '/app/registrations'
     | '/app/schedule'
     | '/app/tickets'
@@ -195,6 +206,7 @@ export interface FileRouteTypes {
     | '/app/budget'
     | '/app/checkin'
     | '/app/donations'
+    | '/app/export'
     | '/app/registrations'
     | '/app/schedule'
     | '/app/tickets'
@@ -286,6 +298,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppRegistrationsRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/export': {
+      id: '/app/export'
+      path: '/export'
+      fullPath: '/app/export'
+      preLoaderRoute: typeof AppExportRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/donations': {
       id: '/app/donations'
       path: '/donations'
@@ -328,6 +347,7 @@ interface AppRouteChildren {
   AppBudgetRoute: typeof AppBudgetRoute
   AppCheckinRoute: typeof AppCheckinRoute
   AppDonationsRoute: typeof AppDonationsRoute
+  AppExportRoute: typeof AppExportRoute
   AppRegistrationsRoute: typeof AppRegistrationsRoute
   AppScheduleRoute: typeof AppScheduleRoute
   AppTicketsRoute: typeof AppTicketsRoute
@@ -340,6 +360,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppBudgetRoute: AppBudgetRoute,
   AppCheckinRoute: AppCheckinRoute,
   AppDonationsRoute: AppDonationsRoute,
+  AppExportRoute: AppExportRoute,
   AppRegistrationsRoute: AppRegistrationsRoute,
   AppScheduleRoute: AppScheduleRoute,
   AppTicketsRoute: AppTicketsRoute,
