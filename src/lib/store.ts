@@ -615,8 +615,14 @@ export const regsApi = {
     // When authed, only show registrations for events owned by current user
     if (currentUserId) {
       filtered = filtered.filter((r) => {
-        const event = cache.events.find((e) => e.id === r.eventId);
-        return event?.ownerId === currentUserId;
+        // If events are loaded, check ownership
+        if (cache.events.length > 0) {
+          const event = cache.events.find((e) => e.id === r.eventId);
+          return event?.ownerId === currentUserId;
+        }
+        // If events aren't loaded yet, show all registrations temporarily
+        // This prevents blank page during initial hydration
+        return true;
       });
     }
     
@@ -746,8 +752,14 @@ export const ordersApi = {
     // When authed, only show orders for events owned by current user
     if (currentUserId) {
       filtered = filtered.filter((o) => {
-        const event = cache.events.find((e) => e.id === o.eventId);
-        return event?.ownerId === currentUserId;
+        // If events are loaded, check ownership
+        if (cache.events.length > 0) {
+          const event = cache.events.find((e) => e.id === o.eventId);
+          return event?.ownerId === currentUserId;
+        }
+        // If events aren't loaded yet, show all orders temporarily
+        // This prevents blank page during initial hydration
+        return true;
       });
     }
     
