@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Download, FileText, Users, Trophy, Wallet, HeartHandshake, Ticket, Calendar, Trash2, AlertTriangle } from "lucide-react";
+import { Download, FileText, Users, Trophy, Wallet, HeartHandshake, Ticket, Calendar, Trash2, AlertTriangle, Settings, Shield } from "lucide-react";
 import { format } from "date-fns";
 import { toast } from "sonner";
 import { sportLabel, sportEmoji } from "@/lib/sports";
@@ -673,29 +673,41 @@ export default function ExportPage() {
           </Card>
         </div>
 
-        {/* Account Deletion */}
-        <Card className="mt-8 border-destructive">
+        {/* Data Management */}
+        <Card className="mt-8">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-destructive">
-              <AlertTriangle className="h-5 w-5" />
-              Danger Zone
+            <CardTitle className="flex items-center gap-2">
+              <Settings className="h-5 w-5" />
+              Data Management
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="mb-4 text-sm text-muted-foreground">
-              Permanently delete all your events and data. This action cannot be undone.
-            </p>
-            <Button 
-              onClick={() => setShowDeleteDialog(true)}
-              variant="destructive"
-              className="w-full"
-            >
-              <Trash2 className="mr-2 h-4 w-4" />
-              Delete All My Data
-            </Button>
+            <div className="grid md:grid-cols-2 gap-4">
+              <Button variant="outline" className="h-auto p-4 flex flex-col gap-2">
+                <Download className="h-6 w-6" />
+                <span>Export All Data</span>
+                <span className="text-xs text-muted-foreground">Download complete data package</span>
+              </Button>
+              <Button variant="outline" className="h-auto p-4 flex flex-col gap-2">
+                <FileText className="h-6 w-6" />
+                <span>Data Summary</span>
+                <span className="text-xs text-muted-foreground">View data overview</span>
+              </Button>
+              <Button variant="outline" className="h-auto p-4 flex flex-col gap-2">
+                <Users className="h-6 w-6" />
+                <span>User Profile</span>
+                <span className="text-xs text-muted-foreground">Manage account settings</span>
+              </Button>
+              <Button variant="outline" className="h-auto p-4 flex flex-col gap-2">
+                <Calendar className="h-6 w-6" />
+                <span>Activity Log</span>
+                <span className="text-xs text-muted-foreground">View recent activity</span>
+              </Button>
+            </div>
           </CardContent>
         </Card>
-      </div>
+
+              </div>
 
       {/* Delete Confirmation Dialog */}
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>

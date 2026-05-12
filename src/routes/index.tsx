@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import {
   Trophy,
   Users,
@@ -14,9 +15,15 @@ import {
   CreditCard,
   Upload,
   Search,
+  Shield,
+  Settings,
+  Cookie,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { InstallPrompt } from "@/components/install-prompt";
+import CookieConsent from "@/components/cookie-consent";
+import PrivacyPolicy from "@/components/privacy-policy";
+import DataProtection from "@/components/data-protection";
 import hero from "@/assets/hero.jpg";
 
 export const Route = createFileRoute("/")({
@@ -49,6 +56,9 @@ const features = [
 ];
 
 function Landing() {
+  const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
+  const [showDataProtection, setShowDataProtection] = useState(false);
+
   return (
     <div className="min-h-screen">
       {/* Header */}
@@ -61,6 +71,9 @@ function Landing() {
             <span className="font-display text-xl font-bold">PitchPro</span>
           </Link>
           <div className="flex items-center gap-2">
+            <Button variant="ghost" size="sm" onClick={() => setShowPrivacyPolicy(true)}>
+              <Shield className="mr-1 h-3.5 w-3.5" /> Privacy
+            </Button>
             <Button variant="ghost" size="sm" asChild>
               <Link to="/lookup">Check Ticket</Link>
             </Button>
@@ -188,6 +201,21 @@ function Landing() {
       <footer className="border-t border-border/40 py-8 text-center text-sm text-muted-foreground">
         Built by Hari Prasad Sanjel for Event Organizers. © {new Date().getFullYear()} PitchPro.
       </footer>
+
+      {/* GDPR Components */}
+      <CookieConsent />
+      
+      {showPrivacyPolicy && (
+        <div className="fixed inset-0 z-50 bg-background">
+          <PrivacyPolicy onBack={() => setShowPrivacyPolicy(false)} />
+        </div>
+      )}
+      
+      {showDataProtection && (
+        <div className="fixed inset-0 z-50 bg-background">
+          <DataProtection onBack={() => setShowDataProtection(false)} />
+        </div>
+      )}
 
       <InstallPrompt />
     </div>

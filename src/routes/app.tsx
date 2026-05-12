@@ -6,8 +6,11 @@ import { useStoreSignal } from "@/hooks/use-store";
 import { useAuth } from "@/hooks/use-auth";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Home, LogOut } from "lucide-react";
+import { Home, LogOut, Settings, Shield } from "lucide-react";
 import { InstallPrompt } from "@/components/install-prompt";
+import CookieConsent from "@/components/cookie-consent";
+import PrivacyPolicy from "@/components/privacy-policy";
+import DataProtection from "@/components/data-protection";
 
 export const Route = createFileRoute("/app")({ component: AppLayout });
 
@@ -15,6 +18,8 @@ function AppLayout() {
   useStoreSignal();
   const { user, loading } = useAuth();
   const navigate = useNavigate();
+  const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
+  const [showDataProtection, setShowDataProtection] = useState(false);
 
   console.log('[AppLayout] User:', user, 'Loading:', loading);
 
@@ -57,8 +62,14 @@ function AppLayout() {
             <SidebarTrigger />
             <div className="flex-1" />
             <span className="hidden truncate text-xs text-muted-foreground sm:inline">{user.email}</span>
+            <Button variant="ghost" size="sm" onClick={() => setShowPrivacyPolicy(true)}>
+              <Shield className="mr-1 h-3.5 w-3.5" /> Privacy
+            </Button>
+            <Button variant="ghost" size="sm" onClick={() => setShowDataProtection(true)}>
+              <Settings className="mr-1 h-3.5 w-3.5" /> Data Rights
+            </Button>
             <Link to="/" className="inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-xs text-muted-foreground hover:text-foreground">
-              <Home className="h-3.5 w-3.5" /> Landing
+              <Home className="h-3.5 w-3.5" /> Home
             </Link>
             <Button size="sm" variant="ghost" onClick={async () => { await supabase.auth.signOut(); navigate({ to: "/login" }); }}>
               <LogOut className="mr-1 h-3.5 w-3.5" /> Sign out
@@ -69,6 +80,22 @@ function AppLayout() {
           </main>
         </div>
       </div>
+      
+      {/* GDPR Components for Authenticated Users */}
+      <CookieConsent />
+      
+      {showPrivacyPolicy && (
+        <div className="fixed inset-0 z-[9999] bg-background overflow-y-auto">
+          <PrivacyPolicy onBack={() => setShowPrivacyPolicy(false)} />
+        </div>
+      )}
+      
+      {showDataProtection && (
+        <div className="fixed inset-0 z-[9999] bg-background overflow-y-auto">
+          <DataProtection onBack={() => setShowDataProtection(false)} />
+        </div>
+      )}
+      
       <InstallPrompt />
     </SidebarProvider>
   );
