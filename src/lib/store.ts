@@ -782,6 +782,30 @@ export const ordersApi = {
   },
 };
 
+// ---------- Superadmin APIs (access all data without user filtering) ----------
+export const superAdminApi = {
+  // Get all events without user filtering
+  getAllEvents: (): SportsEvent[] => [...cache.events].sort((a, b) => b.createdAt.localeCompare(a.createdAt)),
+  
+  // Get all registrations without user filtering
+  getAllRegistrations: (): TeamRegistration[] => [...cache.regs].sort((a, b) => b.submittedAt.localeCompare(a.submittedAt)),
+  
+  // Get all budget items without user filtering
+  getAllBudgetItems: (): BudgetItem[] => [...cache.budget].sort((a, b) => b.date.localeCompare(a.date)),
+  
+  // Get all donations without user filtering
+  getAllDonations: (): Donation[] => [...cache.donations].sort((a, b) => b.date.localeCompare(a.date)),
+  
+  // Get all tickets without user filtering
+  getAllTickets: (): TicketType[] => [...cache.tickets].sort((a, b) => a.sortOrder - b.sortOrder || a.createdAt.localeCompare(b.createdAt)),
+  
+  // Get all orders without user filtering
+  getAllOrders: (): TicketOrder[] => [...cache.orders].sort((a, b) => b.submittedAt.localeCompare(a.submittedAt)),
+  
+  // Get all matches without user filtering
+  getAllMatches: (): Match[] => [...cache.matches].sort((a, b) => a.round - b.round || a.matchNo - b.matchNo),
+};
+
 export function generateBracket(eventId: string, teams: string[]): Match[] {
   matchesApi.removeForEvent(eventId);
   if (teams.length < 2) return [];

@@ -17,6 +17,7 @@ import { Route as AppIndexRouteImport } from './routes/app.index'
 import { Route as TicketsEventIdRouteImport } from './routes/tickets.$eventId'
 import { Route as RegisterEventIdRouteImport } from './routes/register.$eventId'
 import { Route as AppTicketsRouteImport } from './routes/app.tickets'
+import { Route as AppSuperadminRouteImport } from './routes/app.superadmin'
 import { Route as AppScheduleRouteImport } from './routes/app.schedule'
 import { Route as AppRegistrationsRouteImport } from './routes/app.registrations'
 import { Route as AppExportRouteImport } from './routes/app.export'
@@ -64,6 +65,11 @@ const RegisterEventIdRoute = RegisterEventIdRouteImport.update({
 const AppTicketsRoute = AppTicketsRouteImport.update({
   id: '/tickets',
   path: '/tickets',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSuperadminRoute = AppSuperadminRouteImport.update({
+  id: '/superadmin',
+  path: '/superadmin',
   getParentRoute: () => AppRoute,
 } as any)
 const AppScheduleRoute = AppScheduleRouteImport.update({
@@ -118,6 +124,7 @@ export interface FileRoutesByFullPath {
   '/app/export': typeof AppExportRoute
   '/app/registrations': typeof AppRegistrationsRoute
   '/app/schedule': typeof AppScheduleRoute
+  '/app/superadmin': typeof AppSuperadminRoute
   '/app/tickets': typeof AppTicketsRoute
   '/register/$eventId': typeof RegisterEventIdRoute
   '/tickets/$eventId': typeof TicketsEventIdRoute
@@ -135,6 +142,7 @@ export interface FileRoutesByTo {
   '/app/export': typeof AppExportRoute
   '/app/registrations': typeof AppRegistrationsRoute
   '/app/schedule': typeof AppScheduleRoute
+  '/app/superadmin': typeof AppSuperadminRoute
   '/app/tickets': typeof AppTicketsRoute
   '/register/$eventId': typeof RegisterEventIdRoute
   '/tickets/$eventId': typeof TicketsEventIdRoute
@@ -154,6 +162,7 @@ export interface FileRoutesById {
   '/app/export': typeof AppExportRoute
   '/app/registrations': typeof AppRegistrationsRoute
   '/app/schedule': typeof AppScheduleRoute
+  '/app/superadmin': typeof AppSuperadminRoute
   '/app/tickets': typeof AppTicketsRoute
   '/register/$eventId': typeof RegisterEventIdRoute
   '/tickets/$eventId': typeof TicketsEventIdRoute
@@ -174,6 +183,7 @@ export interface FileRouteTypes {
     | '/app/export'
     | '/app/registrations'
     | '/app/schedule'
+    | '/app/superadmin'
     | '/app/tickets'
     | '/register/$eventId'
     | '/tickets/$eventId'
@@ -191,6 +201,7 @@ export interface FileRouteTypes {
     | '/app/export'
     | '/app/registrations'
     | '/app/schedule'
+    | '/app/superadmin'
     | '/app/tickets'
     | '/register/$eventId'
     | '/tickets/$eventId'
@@ -209,6 +220,7 @@ export interface FileRouteTypes {
     | '/app/export'
     | '/app/registrations'
     | '/app/schedule'
+    | '/app/superadmin'
     | '/app/tickets'
     | '/register/$eventId'
     | '/tickets/$eventId'
@@ -284,6 +296,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppTicketsRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/superadmin': {
+      id: '/app/superadmin'
+      path: '/superadmin'
+      fullPath: '/app/superadmin'
+      preLoaderRoute: typeof AppSuperadminRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/schedule': {
       id: '/app/schedule'
       path: '/schedule'
@@ -350,6 +369,7 @@ interface AppRouteChildren {
   AppExportRoute: typeof AppExportRoute
   AppRegistrationsRoute: typeof AppRegistrationsRoute
   AppScheduleRoute: typeof AppScheduleRoute
+  AppSuperadminRoute: typeof AppSuperadminRoute
   AppTicketsRoute: typeof AppTicketsRoute
   AppIndexRoute: typeof AppIndexRoute
   AppEventsEventIdRoute: typeof AppEventsEventIdRoute
@@ -363,6 +383,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppExportRoute: AppExportRoute,
   AppRegistrationsRoute: AppRegistrationsRoute,
   AppScheduleRoute: AppScheduleRoute,
+  AppSuperadminRoute: AppSuperadminRoute,
   AppTicketsRoute: AppTicketsRoute,
   AppIndexRoute: AppIndexRoute,
   AppEventsEventIdRoute: AppEventsEventIdRoute,

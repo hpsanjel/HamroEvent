@@ -10,6 +10,7 @@ import {
   Sparkles,
   Ticket,
   Download,
+  Shield,
 } from "lucide-react";
 import {
   Sidebar,
@@ -24,6 +25,8 @@ import {
   SidebarFooter,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { useState, useEffect } from "react";
+import { getCurrentUser, isSuperAdmin } from "@/lib/auth";
 
 const mainNav = [
   { title: "Dashboard", url: "/app", icon: LayoutDashboard },
@@ -41,6 +44,22 @@ export function AppSidebar() {
   const { state, isMobile, setOpenMobile } = useSidebar();
   const collapsed = state === "collapsed";
   const currentPath = useRouterState({ select: (s) => s.location.pathname });
+  const [currentUser, setCurrentUser] = useState<any>(null);
+  const [isSuperAdminUser, setIsSuperAdminUser] = useState(false);
+
+  useEffect(() => {
+    const checkUserRole = async () => {
+      try {
+        const user = await getCurrentUser();
+        setCurrentUser(user);
+        setIsSuperAdminUser(isSuperAdmin(user));
+      } catch (error) {
+        console.error("Failed to check user role:", error);
+      }
+    };
+
+    checkUserRole();
+  }, []);
 
   const isActive = (url: string) =>
     url === "/app" ? currentPath === "/app" : currentPath.startsWith(url);
@@ -48,6 +67,12 @@ export function AppSidebar() {
   const handleNav = () => {
     if (isMobile) setOpenMobile(false);
   };
+
+  const navigationItems = [...mainNav];
+  
+  if (isSuperAdminUser) {
+    navigationItems.push({ title: "Superadmin", url: "/app/superadmin", icon: Shield });
+  }
 
   return (
     <Sidebar collapsible="icon" className="border-r border-sidebar-border">
@@ -69,7 +94,7 @@ export function AppSidebar() {
           {!collapsed && <SidebarGroupLabel>Manage</SidebarGroupLabel>}
           <SidebarGroupContent>
             <SidebarMenu>
-              {mainNav.map((item) => (
+              {navigationItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild isActive={isActive(item.url)} tooltip={item.title}>
                     <Link to={item.url} onClick={handleNav} className="flex items-center gap-3">
