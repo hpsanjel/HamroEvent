@@ -41,7 +41,7 @@ export default function AccessibilityWidget() {
     fontSize: 100,
     darkMode: false,
     reducedMotion: false,
-    focusVisible: true,
+    focusVisible: false,
   });
 
   // Load settings from localStorage on mount

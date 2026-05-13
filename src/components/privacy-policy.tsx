@@ -46,7 +46,7 @@ export default function PrivacyPolicy({ onBack }: PrivacyPolicyProps) {
               <TabsContent value="overview" className="space-y-4">
                 <div>
                   <h2 className="text-xl font-semibold mb-3">Privacy Overview</h2>
-                  <p className="text-muted-foreground mb-4">
+                  <p className=" mb-4">
                     At PitchPro (EventFlow Hub), we are committed to protecting your privacy and ensuring the security of your personal data. 
                     This privacy policy explains how we collect, use, store, and protect your information in compliance with the General Data Protection Regulation (GDPR).
                   </p>
@@ -73,11 +73,11 @@ export default function PrivacyPolicy({ onBack }: PrivacyPolicyProps) {
                   
                   <div className="space-y-4">
                     <div className="bg-blue-50 dark:bg-blue-950/20 p-4 rounded-lg">
-                      <h3 className="font-medium mb-2">Account Information</h3>
-                      <p className="text-sm text-muted-foreground mb-2">
+                      <h3 className="font-medium text-gray-700 mb-2">Account Information</h3>
+                      <p className="text-sm text-gray-600 mb-2">
                         When you create an account or register for events, we collect:
                       </p>
-                      <ul className="space-y-1 text-sm text-muted-foreground">
+                      <ul className="space-y-1 text-sm text-gray-500">
                         <li>• Full name, email address, phone number</li>
                         <li>• Profile photo and bio (optional)</li>
                         <li>• Password (encrypted, never stored in plain text)</li>
@@ -86,11 +86,11 @@ export default function PrivacyPolicy({ onBack }: PrivacyPolicyProps) {
                     </div>
 
                     <div className="bg-green-50 dark:bg-green-950/20 p-4 rounded-lg">
-                      <h3 className="font-medium mb-2">Event Management Data</h3>
-                      <p className="text-sm text-muted-foreground mb-2">
+                      <h3 className="font-medium text-gray-700 mb-2">Event Management Data</h3>
+                      <p className="text-sm text-gray-600 mb-2">
                         As an event organizer, you provide and we process:
                       </p>
-                      <ul className="space-y-1 text-sm text-muted-foreground">
+                      <ul className="space-y-1 text-sm text-gray-500">
                         <li>• Event details: name, description, venue, dates</li>
                         <li>• Sport type, tournament format, rules</li>
                         <li>• Registration fees, prize pools, currency</li>
@@ -101,11 +101,11 @@ export default function PrivacyPolicy({ onBack }: PrivacyPolicyProps) {
                     </div>
 
                     <div className="bg-purple-50 dark:bg-purple-950/20 p-4 rounded-lg">
-                      <h3 className="font-medium mb-2">Participant & Team Data</h3>
-                      <p className="text-sm text-muted-foreground mb-2">
+                      <h3 className="font-medium text-gray-700 mb-2">Participant & Team Data</h3>
+                      <p className="text-sm text-gray-600 mb-2">
                         When registering for events or purchasing tickets:
                       </p>
-                      <ul className="space-y-1 text-sm text-muted-foreground">
+                      <ul className="space-y-1 text-sm text-gray-500">
                         <li>• Team name, captain details, player roster</li>
                         <li>• Player names, contact info, jersey numbers</li>
                         <li>• Emergency contact information</li>
@@ -116,11 +116,11 @@ export default function PrivacyPolicy({ onBack }: PrivacyPolicyProps) {
                     </div>
 
                     <div className="bg-orange-50 dark:bg-orange-950/20 p-4 rounded-lg">
-                      <h3 className="font-medium mb-2">Technical & Usage Data</h3>
-                      <p className="text-sm text-muted-foreground mb-2">
+                      <h3 className="font-medium text-gray-700 mb-2">Technical & Usage Data</h3>
+                      <p className="text-sm text-gray-600 mb-2">
                         Automatically collected for platform functionality:
                       </p>
-                      <ul className="space-y-1 text-sm text-muted-foreground">
+                      <ul className="space-y-1 text-sm text-gray-500">
                         <li>• IP address (anonymized for privacy)</li>
                         <li>• Device type, browser, operating system</li>
                         <li>• Pages visited, time spent, actions taken</li>
@@ -131,8 +131,8 @@ export default function PrivacyPolicy({ onBack }: PrivacyPolicyProps) {
                     </div>
 
                     <div className="bg-red-50 dark:bg-red-950/20 p-4 rounded-lg">
-                      <h3 className="font-medium mb-2">Data We Do NOT Collect</h3>
-                      <ul className="space-y-1 text-sm text-muted-foreground">
+                      <h3 className="font-medium text-gray-700 mb-2">Data We Do NOT Collect</h3>
+                      <ul className="space-y-1 text-sm text-gray-500">
                         <li>• Sensitive personal information (religion, politics, etc.)</li>
                         <li>• Biometric data beyond what you voluntarily provide</li>
                         <li>• Financial details beyond payment processing</li>
@@ -153,11 +153,11 @@ export default function PrivacyPolicy({ onBack }: PrivacyPolicyProps) {
                   
                   <div className="space-y-4">
                     <div className="bg-blue-50 dark:bg-blue-950/20 p-4 rounded-lg">
-                      <h3 className="font-medium mb-2 text-blue-900 dark:text-blue-100">Core Platform Functions</h3>
-                      <p className="text-sm text-muted-foreground mb-2">
+                      <h3 className="font-medium text-gray-700 mb-2">Core Platform Functions</h3>
+                      <p className="text-sm text-gray-600 mb-2">
                         We use your data to provide essential tournament management services:
                       </p>
-                      <ul className="space-y-1 text-sm">
+                      <ul className="space-y-1 text-gray-500 text-sm">
                         <li>• <strong>Account Management:</strong> User authentication, profile creation, access control</li>
                         <li>• <strong>Event Registration:</strong> Team sign-ups, player registrations, ticket purchases</li>
                         <li>• <strong>Payment Processing:</strong> Secure transaction handling, fee collection, refunds</li>
@@ -168,11 +168,11 @@ export default function PrivacyPolicy({ onBack }: PrivacyPolicyProps) {
                     </div>
 
                     <div className="bg-green-50 dark:bg-green-950/20 p-4 rounded-lg">
-                      <h3 className="font-medium mb-2 text-green-900 dark:text-green-100">Service Enhancement</h3>
-                      <p className="text-sm text-muted-foreground mb-2">
+                      <h3 className="font-medium text-gray-700 mb-2">Service Enhancement</h3>
+                      <p className="text-sm text-gray-600 mb-2">
                         To improve your tournament management experience:
                       </p>
-                      <ul className="space-y-1 text-sm">
+                      <ul className="space-y-1 text-gray-500 text-sm">
                         <li>• <strong>Analytics:</strong> Platform usage insights, feature optimization</li>
                         <li>• <strong>Personalization:</strong> Sport preferences, event recommendations</li>
                         <li>• <strong>Performance:</strong> Load time optimization, error prevention</li>
@@ -182,11 +182,11 @@ export default function PrivacyPolicy({ onBack }: PrivacyPolicyProps) {
                     </div>
 
                     <div className="bg-purple-50 dark:bg-purple-950/20 p-4 rounded-lg">
-                      <h3 className="font-medium mb-2 text-purple-900 dark:text-purple-100">Legal & Security</h3>
-                      <p className="text-sm text-muted-foreground mb-2">
+                      <h3 className="font-medium text-gray-700 mb-2">Legal & Security</h3>
+                      <p className="text-sm text-gray-600 mb-2">
                         For compliance and platform protection:
                       </p>
-                      <ul className="space-y-1 text-sm">
+                      <ul className="space-y-1 text-gray-500 text-sm">
                         <li>• <strong>GDPR Compliance:</strong> Data subject rights, consent management</li>
                         <li>• <strong>Security:</strong> Fraud detection, abuse prevention, account protection</li>
                         <li>• <strong>Legal Requirements:</strong> Tax records, audit trails, dispute resolution</li>
@@ -195,11 +195,11 @@ export default function PrivacyPolicy({ onBack }: PrivacyPolicyProps) {
                     </div>
 
                     <div className="bg-red-50 dark:bg-red-950/20 p-4 rounded-lg">
-                      <h3 className="font-medium mb-2 text-red-900 dark:text-red-100">Strict Prohibitions</h3>
-                      <p className="text-sm text-muted-foreground mb-2">
+                      <h3 className="font-medium text-gray-700 mb-2">Strict Prohibitions</h3>
+                      <p className="text-sm text-gray-600 mb-2">
                         We never use your data for:
                       </p>
-                      <ul className="space-y-1 text-sm">
+                      <ul className="space-y-1 text-gray-500 text-sm">
                         <li>• <strong>Third-party Sales:</strong> We never sell participant or organizer data</li>
                         <li>• <strong>Unrelated Marketing:</strong> No spam, no data sharing with advertisers</li>
                         <li>• <strong>Social Media Profiling:</strong> We don't build profiles from your data</li>
@@ -220,14 +220,14 @@ export default function PrivacyPolicy({ onBack }: PrivacyPolicyProps) {
                   
                   <div className="space-y-4">
                     <div className="bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-                      <h3 className="font-medium mb-2 flex items-center gap-2">
+                      <h3 className="font-medium text-gray-700 mb-2 flex items-center gap-2">
                         <Database className="h-4 w-4" />
                         Right to Access
                       </h3>
-                      <p className="text-sm text-muted-foreground mb-3">
+                      <p className="text-sm text-gray-600 mb-3">
                         You have the right to know what personal data we hold about you and how it's used.
                       </p>
-                      <div className="text-sm space-y-2 mb-3">
+                      <div className="text-sm space-y-2 mb-3 text-gray-600">
                         <p><strong>What you can access:</strong></p>
                         <ul className="ml-4 space-y-1">
                           <li>• Account profile and authentication data</li>
@@ -238,20 +238,19 @@ export default function PrivacyPolicy({ onBack }: PrivacyPolicyProps) {
                           <li>• Communication logs and support tickets</li>
                         </ul>
                       </div>
-                      <Button size="sm" variant="outline" className="w-full">Download My Complete Data</Button>
                     </div>
 
                     <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
-                      <h3 className="font-medium mb-2 flex items-center gap-2">
+                      <h3 className="font-medium text-gray-700 mb-2 flex items-center gap-2">
                         <UserCheck className="h-4 w-4" />
                         Right to Rectification
                       </h3>
-                      <p className="text-sm text-muted-foreground mb-3">
+                      <p className="text-sm text-gray-600 mb-3">
                         You can correct inaccurate or incomplete personal data we hold about you.
                       </p>
-                      <div className="text-sm space-y-2 mb-3">
+                      <div className="text-sm space-y-2 mb-3 text-gray-500">
                         <p><strong>What you can update:</strong></p>
-                        <ul className="ml-4 space-y-1">
+                        <ul className="ml-4 space-y-1 ">
                           <li>• Personal profile information (name, contact details)</li>
                           <li>• Team and player information</li>
                           <li>• Event details and settings</li>
@@ -259,18 +258,17 @@ export default function PrivacyPolicy({ onBack }: PrivacyPolicyProps) {
                           <li>• Communication preferences</li>
                         </ul>
                       </div>
-                      <Button size="sm" variant="outline" className="w-full">Update My Information</Button>
                     </div>
 
                     <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
-                      <h3 className="font-medium mb-2 flex items-center gap-2">
+                      <h3 className="font-medium text-gray-700 mb-2 flex items-center gap-2">
                         <Trash2 className="h-4 w-4" />
                         Right to Erasure (Right to be Forgotten)
                       </h3>
-                      <p className="text-sm text-muted-foreground mb-3">
+                      <p className="text-sm text-gray-600 mb-3">
                         You can request deletion of your personal data when it's no longer needed.
                       </p>
-                      <div className="text-sm space-y-2 mb-3">
+                      <div className="text-sm space-y-2 mb-3 text-gray-500">
                         <p><strong>What gets deleted:</strong></p>
                         <ul className="ml-4 space-y-1">
                           <li>• Your account and profile data</li>
@@ -283,18 +281,17 @@ export default function PrivacyPolicy({ onBack }: PrivacyPolicyProps) {
                           <strong>Note:</strong> Some data may be retained for legal obligations (tax records, etc.)
                         </p>
                       </div>
-                      <Button size="sm" variant="destructive" className="w-full">Request Data Deletion</Button>
                     </div>
 
                     <div className="bg-purple-50 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-800 rounded-lg p-4">
-                      <h3 className="font-medium mb-2 flex items-center gap-2">
+                      <h3 className="font-medium text-gray-700 mb-2 flex items-center gap-2">
                         <Download className="h-4 w-4" />
                         Right to Portability
                       </h3>
-                      <p className="text-sm text-muted-foreground mb-3">
+                      <p className="text-sm text-gray-600 mb-3">
                         You can request your data in a structured, machine-readable format.
                       </p>
-                      <div className="text-sm space-y-2 mb-3">
+                      <div className="text-sm space-y-2 mb-3 text-gray-500">
                         <p><strong>Available formats:</strong></p>
                         <ul className="ml-4 space-y-1">
                           <li>• CSV files for tabular data (events, participants, etc.)</li>
@@ -303,18 +300,17 @@ export default function PrivacyPolicy({ onBack }: PrivacyPolicyProps) {
                           <li>• Complete data package for migration to other services</li>
                         </ul>
                       </div>
-                      <Button size="sm" variant="outline" className="w-full">Export in Machine-Readable Format</Button>
                     </div>
 
                     <div className="bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-800 rounded-lg p-4">
-                      <h3 className="font-medium mb-2 flex items-center gap-2">
+                      <h3 className="font-medium text-gray-700 mb-2 flex items-center gap-2">
                         <AlertTriangle className="h-4 w-4" />
                         Right to Object & Restrict Processing
                       </h3>
-                      <p className="text-sm text-muted-foreground mb-3">
+                      <p className="text-sm text-gray-600 mb-3">
                         You can object to or restrict how we process your personal data.
                       </p>
-                      <div className="text-sm space-y-2 mb-3">
+                      <div className="text-sm space-y-2 mb-3 text-gray-500">
                         <p><strong>You can object to:</strong></p>
                         <ul className="ml-4 space-y-1">
                           <li>• Direct marketing communications</li>
@@ -323,7 +319,6 @@ export default function PrivacyPolicy({ onBack }: PrivacyPolicyProps) {
                           <li>• Automated decision-making processes</li>
                         </ul>
                       </div>
-                      <Button size="sm" variant="outline" className="w-full">Manage Processing Preferences</Button>
                     </div>
                   </div>
                 </div>
@@ -333,22 +328,20 @@ export default function PrivacyPolicy({ onBack }: PrivacyPolicyProps) {
                 <div>
                   <h2 className="text-xl font-semibold mb-3 flex items-center gap-2">
                     <Cookie className="h-5 w-5" />
-                    Cookie & Tracking Policy
+                    Cookie Policy
                   </h2>
                   
                   <div className="space-y-4">
                     <p className="text-muted-foreground mb-4">
-                      PitchPro uses cookies and similar technologies to provide secure tournament management services and enhance your experience. 
-                      This policy explains what we use and why.
+                      PitchPro just uses essential cookies to provide secure tournament management services and enhance your experience. 
                     </p>
 
-                    <div className="grid gap-4 md:grid-cols-2">
                       <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
-                        <h3 className="font-medium mb-2 text-red-900 dark:text-red-100">Essential Cookies</h3>
-                        <p className="text-sm text-muted-foreground mb-2">
+                        <h3 className="font-medium text-gray-700 mb-2">Essential Cookies</h3>
+                        <p className="text-sm text-gray-600 mb-2">
                           Required for core tournament management functionality:
                         </p>
-                        <ul className="text-xs text-muted-foreground space-y-1">
+                        <ul className="text-xs text-gray-600 space-y-1">
                           <li>• <strong>Authentication:</strong> Login sessions, access tokens, security</li>
                           <li>• <strong>Event Management:</strong> Registration forms, booking processes</li>
                           <li>• <strong>Security:</strong> CSRF protection, fraud prevention</li>
@@ -360,66 +353,16 @@ export default function PrivacyPolicy({ onBack }: PrivacyPolicyProps) {
                         </p>
                       </div>
 
-                      <div className="bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-                        <h3 className="font-medium mb-2 text-blue-900 dark:text-blue-100">Analytics Cookies</h3>
-                        <p className="text-sm text-muted-foreground mb-2">
-                          Help us improve PitchPro for tournament organizers:
-                        </p>
-                        <ul className="text-xs text-muted-foreground space-y-1">
-                          <li>• <strong>Usage Analytics:</strong> Page views, feature usage, user flows</li>
-                          <li>• <strong>Performance:</strong> Load times, error rates, crash reports</li>
-                          <li>• <strong>Tournament Insights:</strong> Popular sports, event sizes, registration patterns</li>
-                          <li>• <strong>Geographic Data:</strong> Approximate location for regional features</li>
-                        </ul>
-                        <p className="text-xs text-blue-700 dark:text-blue-300 mt-2">
-                          <strong>Optional</strong> - Can be disabled without affecting core functionality
-                        </p>
-                      </div>
-
-                      <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
-                        <h3 className="font-medium mb-2 text-green-900 dark:text-green-100">Functional Cookies</h3>
-                        <p className="text-sm text-muted-foreground mb-2">
-                          Enhanced features for better tournament management:
-                        </p>
-                        <ul className="text-xs text-muted-foreground space-y-1">
-                          <li>• <strong>Personalization:</strong> Sport preferences, event recommendations</li>
-                          <li>• <strong>Convenience:</strong> Remembered event details, auto-fill forms</li>
-                          <li>• <strong>Communication:</strong> Notification preferences, messaging settings</li>
-                          <li>• <strong>Accessibility:</strong> Theme preferences, language settings</li>
-                        </ul>
-                        <p className="text-xs text-green-700 dark:text-green-300 mt-2">
-                          <strong>Optional</strong> - Enhances but not required for basic use
-                        </p>
-                      </div>
-
-                      <div className="bg-purple-50 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-800 rounded-lg p-4">
-                        <h3 className="font-medium mb-2 text-purple-900 dark:text-purple-100">Marketing Cookies</h3>
-                        <p className="text-sm text-muted-foreground mb-2">
-                          For promotional activities (limited and respectful):
-                        </p>
-                        <ul className="text-xs text-muted-foreground space-y-1">
-                          <li>• <strong>Event Promotion:</strong> Similar tournaments you might like</li>
-                          <li>• <strong>Platform Updates:</strong> New features, improvements</li>
-                          <li>• <strong>Partnership Offers:</strong> Relevant services for organizers</li>
-                          <li>• <strong>Retargeting:</strong> Reminders about incomplete registrations</li>
-                        </ul>
-                        <p className="text-xs text-purple-700 dark:text-purple-300 mt-2">
-                          <strong>Optional</strong> - Never shared with third parties
-                        </p>
-                      </div>
-                    </div>
 
                     <div className="bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-800 rounded-lg p-4">
-                      <h3 className="font-medium mb-2 text-orange-900 dark:text-orange-100">Third-Party Services</h3>
-                      <p className="text-sm text-muted-foreground mb-2">
+                      <h3 className="font-medium text-gray-700 mb-2">Third-Party Services</h3>
+                      <p className="text-sm text-gray-600 mb-2">
                         We integrate with trusted services for tournament management:
                       </p>
-                      <ul className="text-xs text-muted-foreground space-y-1">
-                        <li>• <strong>Payment Processors:</strong> Stripe, PayPal (secure transactions only)</li>
-                        <li>• <strong>Analytics:</strong> Google Analytics (anonymized data only)</li>
+                      <ul className="text-xs text-gray-600 space-y-1">
+                        <li>• <strong>Payment Processors:</strong> Stripe, Vipps (secure transactions only)</li>
                         <li>• <strong>Communication:</strong> Email services (transactional emails only)</li>
                         <li>• <strong>Storage:</strong> Cloud providers (encrypted data storage)</li>
-                        <li>• <strong>Mapping:</strong> Location services (venue directions only)</li>
                       </ul>
                       <p className="text-xs text-orange-700 dark:text-orange-300 mt-2">
                         <strong>Note:</strong> These services have their own privacy policies
@@ -427,14 +370,9 @@ export default function PrivacyPolicy({ onBack }: PrivacyPolicyProps) {
                     </div>
 
                     <div className="bg-muted/50 p-4 rounded-lg">
-                      <h3 className="font-medium mb-2">Managing Your Preferences</h3>
-                      <div className="text-sm text-muted-foreground space-y-3">
-                        <p>
-                          <strong>Cookie Consent Banner:</strong> Appears on first visit, lets you choose preferences
-                        </p>
-                        <p>
-                          <strong>Browser Settings:</strong> Most browsers allow blocking/deleting cookies
-                        </p>
+                      <h3 className="font-medium text-gray-300 mb-2">Managing Your Preferences</h3>
+                      <div className="text-sm text-gray-400 space-y-3">
+                   
                         <p>
                           <strong>Data Rights:</strong> Use "Data Rights" in authenticated area to manage all preferences
                         </p>
@@ -443,7 +381,6 @@ export default function PrivacyPolicy({ onBack }: PrivacyPolicyProps) {
                         </p>
                       </div>
                       <div className="flex gap-2 mt-4">
-                        <Button size="sm" variant="outline">Update Cookie Preferences</Button>
                         <Button size="sm" variant="outline">Clear All Data</Button>
                       </div>
                     </div>
@@ -454,14 +391,7 @@ export default function PrivacyPolicy({ onBack }: PrivacyPolicyProps) {
           </CardContent>
         </Card>
 
-        <div className="mt-6 text-center text-sm text-muted-foreground">
-          <p>
-            Questions about our privacy policy? Contact us at{' '}
-            <a href="mailto:privacy@pitchpro.com" className="text-primary hover:underline">
-              privacy@pitchpro.com
-            </a>
-          </p>
-        </div>
+
       </div>
     </div>
   );

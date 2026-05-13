@@ -16,7 +16,6 @@ import { fmtMoney, currencySymbol } from "@/lib/currency";
 // import { generateBracket } from "@/lib/match-scheduler"; // Commented out as file doesn't exist
 import { uid } from "@/lib/store";
 import AccessibilityWidget from "@/components/accessibility-widget";
-import AccessibilityTest from "@/components/accessibility-test";
 import PrivacyPolicy from "@/components/privacy-policy";
 import DataProtection from "@/components/data-protection";
 
@@ -149,33 +148,6 @@ export default function App() {
 
       {/* Main Content */}
       <main className="flex flex-1">
-        {/* GDPR Test Section */}
-        <section className="border-b border-border bg-yellow-50 dark:bg-yellow-950/20">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 py-6">
-            <h2 className="text-lg font-semibold mb-4">GDPR Components Test</h2>
-            <div className="flex gap-4">
-              <Button onClick={() => setShowPrivacyPolicy(true)}>
-                <Shield className="mr-2 h-4 w-4" /> Test Privacy Policy
-              </Button>
-              <Button onClick={() => setShowDataProtection(true)} variant="outline">
-                <Settings className="mr-2 h-4 w-4" /> Test Data Protection
-              </Button>
-              <Button onClick={() => alert('Cookie consent should be visible at bottom')} variant="secondary">
-                <Cookie className="mr-2 h-4 w-4" /> Check Cookie Consent
-              </Button>
-            </div>
-            <p className="text-sm text-muted-foreground mt-2">
-              Cookie consent should appear at the bottom of the page automatically.
-            </p>
-          </div>
-        </section>
-
-        {/* Accessibility Test Section */}
-        <section className="border-b border-border">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 py-6">
-            <AccessibilityTest />
-          </div>
-        </section>
         
         <div className="flex">
           {/* Sidebar */}
