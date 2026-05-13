@@ -1,13 +1,11 @@
 import { useState, useEffect } from "react";
 import { eventsApi, regsApi, matchesApi, ticketsApi, ordersApi } from "@/lib/store";
 import { useStoreSignal } from "@/hooks/use-store";
-import { useHydrated } from "@/hooks/use-hydrated";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Check, X, Users, Calendar, MapPin, Trophy, Plus, Wallet, HeartHandshake, ScanLine, Sparkles, Download, Radio, Ticket, Edit, Trash2, Shield, Settings, Cookie } from "lucide-react";
@@ -15,12 +13,10 @@ import { format } from "date-fns";
 import { toast } from "sonner";
 import { sportEmoji, sportLabel } from "@/lib/sports";
 import { fmtMoney, currencySymbol } from "@/lib/currency";
-import { uploadEventBanner } from "@/lib/image-upload";
 // import { generateBracket } from "@/lib/match-scheduler"; // Commented out as file doesn't exist
 import { uid } from "@/lib/store";
 import AccessibilityWidget from "@/components/accessibility-widget";
 import AccessibilityTest from "@/components/accessibility-test";
-import CookieConsent from "@/components/cookie-consent";
 import PrivacyPolicy from "@/components/privacy-policy";
 import DataProtection from "@/components/data-protection";
 import GDPRTestSimple from "@/components/gdpr-test-simple";
@@ -612,8 +608,6 @@ export default function App() {
         </DialogContent>
       </Dialog>
 
-      {/* GDPR Components */}
-      <CookieConsent />
       
       {showPrivacyPolicy && (
         <div className="fixed inset-0 z-50 bg-background">

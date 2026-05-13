@@ -7,8 +7,6 @@ import { useAuth } from "@/hooks/use-auth";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Home, LogOut, Settings, Shield } from "lucide-react";
-import { InstallPrompt } from "@/components/install-prompt";
-import CookieConsent from "@/components/cookie-consent";
 import PrivacyPolicy from "@/components/privacy-policy";
 import DataProtection from "@/components/data-protection";
 
@@ -80,9 +78,6 @@ function AppLayout() {
           </main>
         </div>
       </div>
-      
-      {/* GDPR Components for Authenticated Users */}
-      <CookieConsent />
       
       {showPrivacyPolicy && (
         <div className="fixed inset-0 z-[9999] bg-background overflow-y-auto">

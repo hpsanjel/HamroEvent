@@ -20,17 +20,6 @@ export default function DataProtection({ onBack }: DataProtectionProps) {
   const [deleteConfirmation, setDeleteConfirmation] = useState("");
   const [currentConsent, setCurrentConsent] = useState<any>(null);
 
-  // Load current consent settings
-  useEffect(() => {
-    try {
-      const consent = localStorage.getItem('cookie-consent');
-      if (consent) {
-        setCurrentConsent(JSON.parse(consent));
-      }
-    } catch (error) {
-      console.error('Failed to load consent settings:', error);
-    }
-  }, []);
 
   const handleDataExport = async () => {
     setIsExporting(true);

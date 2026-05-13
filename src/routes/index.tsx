@@ -20,8 +20,6 @@ import {
   Cookie,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { InstallPrompt } from "@/components/install-prompt";
-import CookieConsent from "@/components/cookie-consent";
 import PrivacyPolicy from "@/components/privacy-policy";
 import DataProtection from "@/components/data-protection";
 import hero from "@/assets/hero.jpg";
@@ -202,9 +200,6 @@ function Landing() {
         Built by Hari Prasad Sanjel for Event Organizers. © {new Date().getFullYear()} PitchPro.
       </footer>
 
-      {/* GDPR Components */}
-      <CookieConsent />
-      
       {showPrivacyPolicy && (
         <div className="fixed inset-0 z-[9999] bg-background overflow-y-auto">
           <PrivacyPolicy onBack={() => setShowPrivacyPolicy(false)} />
