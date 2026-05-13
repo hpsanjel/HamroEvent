@@ -212,7 +212,7 @@ function Landing() {
         </div>
       )}
 
-      <InstallPrompt />
+
     </div>
   );
 }

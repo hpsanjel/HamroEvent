@@ -177,7 +177,7 @@ export default function AccessibilityWidget() {
                   className="text-xs"
                   style={{ zIndex: 10000 }}
                 >
-                  <X className="w-4 h-4" data-lucide />
+                  X
                 </Button>
               </div>
             </div>

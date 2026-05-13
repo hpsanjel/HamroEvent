@@ -91,7 +91,7 @@ function AppLayout() {
         </div>
       )}
       
-      <InstallPrompt />
+
     </SidebarProvider>
   );
 }

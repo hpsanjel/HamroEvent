@@ -30,7 +30,7 @@ function EventDetail() {
       <div className="mx-auto max-w-3xl text-center py-20">
         <p className="text-muted-foreground">Event not found.</p>
         <Button asChild variant="outline" className="mt-4">
-          <Link to="/app/events">Back to events</Link>
+          <a href="/app/events">Back to events</a>
         </Button>
       </div>
     );
@@ -45,9 +45,9 @@ function EventDetail() {
 
   return (
     <div className="mx-auto max-w-5xl space-y-6">
-      <Link to="/app/events" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
+      <a href="/app/events" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
         <ArrowLeft className="h-4 w-4" /> All events
-      </Link>
+      </a>
 
       {event.bannerUrl && (
         <div className="overflow-hidden rounded-3xl border border-border shadow-card">
@@ -84,7 +84,7 @@ function EventDetail() {
             </div>
             <div className="flex flex-wrap gap-2">
               <Button onClick={() => setShareOpen(true)}><Share2 className="mr-1.5 h-4 w-4" /> Share QR</Button>
-              <Button asChild variant="outline"><Link to="/app/events">List</Link></Button>
+              <Button asChild variant="outline"><a href="/app/events">List</a></Button>
               <Button
                 variant="ghost"
                 size="icon"
@@ -92,7 +92,7 @@ function EventDetail() {
                   if (confirm(`Delete "${event.name}" and all its data?`)) {
                     eventsApi.remove(eventId);
                     toast.success("Deleted");
-                    navigate({ to: "/app/events" });
+                    window.location.href = "/app/events";
                   }
                 }}
               >

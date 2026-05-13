@@ -18,6 +18,8 @@ export const Route = createFileRoute("/app/donations")({
 
 const empty = (eventId: string): Donation => ({
   id: uid(), eventId, donor: "", amount: 0, type: "cash", note: "", date: new Date().toISOString().slice(0, 10),
+  createdAt: "",
+  updatedAt: ""
 });
 
 function DonationsPage() {

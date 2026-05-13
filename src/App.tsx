@@ -19,7 +19,6 @@ import AccessibilityWidget from "@/components/accessibility-widget";
 import AccessibilityTest from "@/components/accessibility-test";
 import PrivacyPolicy from "@/components/privacy-policy";
 import DataProtection from "@/components/data-protection";
-import GDPRTestSimple from "@/components/gdpr-test-simple";
 
 export default function App() {
   useStoreSignal();
@@ -628,7 +627,6 @@ export default function App() {
       )}
       
       <AccessibilityWidget />
-      <GDPRTestSimple />
     </div>
   );
 }
