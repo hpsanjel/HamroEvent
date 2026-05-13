@@ -147,7 +147,7 @@ export default function AccessibilityWidget() {
           aria-label="Accessibility settings"
           style={{ zIndex: 9999 }}
         >
-          <Accessibility className="w-14 h-14" />
+          <Accessibility className="w-14 h-14" data-lucide="accessibility-button" />
         </Button>
       )}
 
@@ -175,8 +175,9 @@ export default function AccessibilityWidget() {
                   size="sm"
                   onClick={() => setIsOpen(false)}
                   className="text-xs"
+                  style={{ zIndex: 10000 }}
                 >
-                  <X className="w-4 h-4" />
+                  <X className="w-4 h-4" data-lucide />
                 </Button>
               </div>
             </div>
@@ -185,7 +186,7 @@ export default function AccessibilityWidget() {
             {/* High Contrast */}
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Contrast className="w-4 h-4" />
+                <Contrast className="w-4 h-4" data-lucide />
                 <Label className="text-sm">High Contrast</Label>
               </div>
               <Switch
@@ -201,7 +202,7 @@ export default function AccessibilityWidget() {
             {/* Large Text */}
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Type className="w-4 h-4" />
+                <Type className="w-4 h-4" data-lucide />
                 <Label className="text-sm">Large Text</Label>
               </div>
               <Switch
@@ -228,7 +229,7 @@ export default function AccessibilityWidget() {
                     onClick={decreaseFontSize}
                     className="w-8 h-8 p-0"
                   >
-                    <ZoomOut className="w-3 h-3" />
+                    <ZoomOut className="w-3 h-3" data-lucide />
                   </Button>
                   <span className="text-sm font-medium w-12 text-center">
                     {settings.fontSize}%
@@ -239,7 +240,7 @@ export default function AccessibilityWidget() {
                     onClick={increaseFontSize}
                     className="w-8 h-8 p-0"
                   >
-                    <ZoomIn className="w-3 h-3" />
+                    <ZoomIn className="w-3 h-3" data-lucide />
                   </Button>
                 </div>
               </div>
@@ -258,7 +259,7 @@ export default function AccessibilityWidget() {
             {/* Hide Images */}
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <ImageOff className="w-4 h-4" />
+                <ImageOff className="w-4 h-4" data-lucide />
                 <Label className="text-sm">Hide Images</Label>
               </div>
               <Switch
@@ -274,7 +275,7 @@ export default function AccessibilityWidget() {
             {/* Grayscale */}
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Palette className="w-4 h-4" />
+                <Palette className="w-4 h-4" data-lucide />
                 <Label className="text-sm">Black & White</Label>
               </div>
               <Switch
@@ -290,7 +291,7 @@ export default function AccessibilityWidget() {
             {/* Dark Mode */}
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                {settings.darkMode ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
+                {settings.darkMode ? <Moon className="w-4 h-4" data-lucide /> : <Sun className="w-4 h-4" data-lucide />}
                 <Label className="text-sm">{settings.darkMode ? 'Dark Mode' : 'Light Mode'}</Label>
               </div>
               <Switch
@@ -308,7 +309,7 @@ export default function AccessibilityWidget() {
             {/* Reduced Motion */}
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Eye className="w-4 h-4" />
+                <Eye className="w-4 h-4" data-lucide />
                 <Label className="text-sm">Reduced Motion</Label>
               </div>
               <Switch

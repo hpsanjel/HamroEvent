@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowLeft, Shield, Eye, Database, UserCheck, Cookie } from "lucide-react";
+import { ArrowLeft, Shield, Eye, Database, UserCheck, Cookie, Trash2, Download, AlertTriangle } from "lucide-react";
 
 interface PrivacyPolicyProps {
   onBack?: () => void;
@@ -12,7 +12,7 @@ export default function PrivacyPolicy({ onBack }: PrivacyPolicyProps) {
   const [activeTab, setActiveTab] = useState("overview");
 
   return (
-    <div className="min-h-screen bg-background p-4">
+    <div className="min-h-screen bg-background p-4 pb-20">
       <div className="max-w-4xl mx-auto">
         <div className="flex items-center gap-4 mb-6">
           {onBack && (
@@ -72,33 +72,72 @@ export default function PrivacyPolicy({ onBack }: PrivacyPolicyProps) {
                   </h2>
                   
                   <div className="space-y-4">
-                    <div>
-                      <h3 className="font-medium mb-2">Personal Information</h3>
+                    <div className="bg-blue-50 dark:bg-blue-950/20 p-4 rounded-lg">
+                      <h3 className="font-medium mb-2">Account Information</h3>
+                      <p className="text-sm text-muted-foreground mb-2">
+                        When you create an account or register for events, we collect:
+                      </p>
                       <ul className="space-y-1 text-sm text-muted-foreground">
-                        <li>• Name and contact information</li>
-                        <li>• Email address and phone number</li>
-                        <li>• Payment information (processed securely)</li>
-                        <li>• Team and participant details</li>
+                        <li>• Full name, email address, phone number</li>
+                        <li>• Profile photo and bio (optional)</li>
+                        <li>• Password (encrypted, never stored in plain text)</li>
+                        <li>• Authentication tokens for secure access</li>
                       </ul>
                     </div>
 
-                    <div>
-                      <h3 className="font-medium mb-2">Event Data</h3>
+                    <div className="bg-green-50 dark:bg-green-950/20 p-4 rounded-lg">
+                      <h3 className="font-medium mb-2">Event Management Data</h3>
+                      <p className="text-sm text-muted-foreground mb-2">
+                        As an event organizer, you provide and we process:
+                      </p>
                       <ul className="space-y-1 text-sm text-muted-foreground">
-                        <li>• Event registration details</li>
-                        <li>• Participation history</li>
-                        <li>• Match results and statistics</li>
-                        <li>• Ticket purchases and orders</li>
+                        <li>• Event details: name, description, venue, dates</li>
+                        <li>• Sport type, tournament format, rules</li>
+                        <li>• Registration fees, prize pools, currency</li>
+                        <li>• Contact information for participants</li>
+                        <li>• Budget items: income, expenses, donations</li>
+                        <li>• Match schedules, brackets, results</li>
                       </ul>
                     </div>
 
-                    <div>
-                      <h3 className="font-medium mb-2">Technical Data</h3>
+                    <div className="bg-purple-50 dark:bg-purple-950/20 p-4 rounded-lg">
+                      <h3 className="font-medium mb-2">Participant & Team Data</h3>
+                      <p className="text-sm text-muted-foreground mb-2">
+                        When registering for events or purchasing tickets:
+                      </p>
                       <ul className="space-y-1 text-sm text-muted-foreground">
-                        <li>• IP address (anonymized)</li>
-                        <li>• Browser and device information</li>
-                        <li>• Usage patterns and preferences</li>
-                        <li>• Cookie and tracking data (with consent)</li>
+                        <li>• Team name, captain details, player roster</li>
+                        <li>• Player names, contact info, jersey numbers</li>
+                        <li>• Emergency contact information</li>
+                        <li>• Payment information (processed via secure payment gateways)</li>
+                        <li>• Check-in status, attendance records</li>
+                        <li>• Match participation, performance statistics</li>
+                      </ul>
+                    </div>
+
+                    <div className="bg-orange-50 dark:bg-orange-950/20 p-4 rounded-lg">
+                      <h3 className="font-medium mb-2">Technical & Usage Data</h3>
+                      <p className="text-sm text-muted-foreground mb-2">
+                        Automatically collected for platform functionality:
+                      </p>
+                      <ul className="space-y-1 text-sm text-muted-foreground">
+                        <li>• IP address (anonymized for privacy)</li>
+                        <li>• Device type, browser, operating system</li>
+                        <li>• Pages visited, time spent, actions taken</li>
+                        <li>• Error logs, performance metrics</li>
+                        <li>• Location data (approximate, with consent)</li>
+                        <li>• Cookie and local storage data (with consent)</li>
+                      </ul>
+                    </div>
+
+                    <div className="bg-red-50 dark:bg-red-950/20 p-4 rounded-lg">
+                      <h3 className="font-medium mb-2">Data We Do NOT Collect</h3>
+                      <ul className="space-y-1 text-sm text-muted-foreground">
+                        <li>• Sensitive personal information (religion, politics, etc.)</li>
+                        <li>• Biometric data beyond what you voluntarily provide</li>
+                        <li>• Financial details beyond payment processing</li>
+                        <li>• Private communications between users</li>
+                        <li>• Data from third-party social media accounts</li>
                       </ul>
                     </div>
                   </div>
@@ -114,32 +153,58 @@ export default function PrivacyPolicy({ onBack }: PrivacyPolicyProps) {
                   
                   <div className="space-y-4">
                     <div className="bg-blue-50 dark:bg-blue-950/20 p-4 rounded-lg">
-                      <h3 className="font-medium mb-2 text-blue-900 dark:text-blue-100">Primary Purposes</h3>
+                      <h3 className="font-medium mb-2 text-blue-900 dark:text-blue-100">Core Platform Functions</h3>
+                      <p className="text-sm text-muted-foreground mb-2">
+                        We use your data to provide essential tournament management services:
+                      </p>
                       <ul className="space-y-1 text-sm">
-                        <li>• Event registration and management</li>
-                        <li>• Payment processing and ticketing</li>
-                        <li>• Communication about events</li>
-                        <li>• Platform functionality and security</li>
+                        <li>• <strong>Account Management:</strong> User authentication, profile creation, access control</li>
+                        <li>• <strong>Event Registration:</strong> Team sign-ups, player registrations, ticket purchases</li>
+                        <li>• <strong>Payment Processing:</strong> Secure transaction handling, fee collection, refunds</li>
+                        <li>• <strong>Communication:</strong> Event updates, notifications, organizer-participant messaging</li>
+                        <li>• <strong>Scheduling & Brackets:</strong> Match generation, tournament bracket creation</li>
+                        <li>• <strong>Check-in & Access:</strong> QR code scanning, attendance tracking</li>
                       </ul>
                     </div>
 
                     <div className="bg-green-50 dark:bg-green-950/20 p-4 rounded-lg">
-                      <h3 className="font-medium mb-2 text-green-900 dark:text-green-100">Secondary Purposes</h3>
+                      <h3 className="font-medium mb-2 text-green-900 dark:text-green-100">Service Enhancement</h3>
+                      <p className="text-sm text-muted-foreground mb-2">
+                        To improve your tournament management experience:
+                      </p>
                       <ul className="space-y-1 text-sm">
-                        <li>• Improving our services</li>
-                        <li>• Analytics and usage insights</li>
-                        <li>• Customer support</li>
-                        <li>• Legal compliance</li>
+                        <li>• <strong>Analytics:</strong> Platform usage insights, feature optimization</li>
+                        <li>• <strong>Personalization:</strong> Sport preferences, event recommendations</li>
+                        <li>• <strong>Performance:</strong> Load time optimization, error prevention</li>
+                        <li>• <strong>Support:</strong> Help desk responses, issue resolution</li>
+                        <li>• <strong>Features:</strong> New functionality based on user feedback</li>
+                      </ul>
+                    </div>
+
+                    <div className="bg-purple-50 dark:bg-purple-950/20 p-4 rounded-lg">
+                      <h3 className="font-medium mb-2 text-purple-900 dark:text-purple-100">Legal & Security</h3>
+                      <p className="text-sm text-muted-foreground mb-2">
+                        For compliance and platform protection:
+                      </p>
+                      <ul className="space-y-1 text-sm">
+                        <li>• <strong>GDPR Compliance:</strong> Data subject rights, consent management</li>
+                        <li>• <strong>Security:</strong> Fraud detection, abuse prevention, account protection</li>
+                        <li>• <strong>Legal Requirements:</strong> Tax records, audit trails, dispute resolution</li>
+                        <li>• <strong>Safety:</strong> Emergency contacts, participant verification</li>
                       </ul>
                     </div>
 
                     <div className="bg-red-50 dark:bg-red-950/20 p-4 rounded-lg">
-                      <h3 className="font-medium mb-2 text-red-900 dark:text-red-100">What We Don't Do</h3>
+                      <h3 className="font-medium mb-2 text-red-900 dark:text-red-100">Strict Prohibitions</h3>
+                      <p className="text-sm text-muted-foreground mb-2">
+                        We never use your data for:
+                      </p>
                       <ul className="space-y-1 text-sm">
-                        <li>• Sell your personal data</li>
-                        <li>• Use data for unrelated marketing</li>
-                        <li>• Share data without consent</li>
-                        <li>• Retain data longer than necessary</li>
+                        <li>• <strong>Third-party Sales:</strong> We never sell participant or organizer data</li>
+                        <li>• <strong>Unrelated Marketing:</strong> No spam, no data sharing with advertisers</li>
+                        <li>• <strong>Social Media Profiling:</strong> We don't build profiles from your data</li>
+                        <li>• <strong>Credit Scoring:</strong> Your tournament activity doesn't affect financial records</li>
+                        <li>• <strong>Unnecessary Retention:</strong> Data deleted when no longer needed</li>
                       </ul>
                     </div>
                   </div>
@@ -154,44 +219,111 @@ export default function PrivacyPolicy({ onBack }: PrivacyPolicyProps) {
                   </h2>
                   
                   <div className="space-y-4">
-                    <div className="border rounded-lg p-4">
-                      <h3 className="font-medium mb-2">Right to Access</h3>
-                      <p className="text-sm text-muted-foreground mb-2">
-                        You can request a copy of all personal data we hold about you.
+                    <div className="bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+                      <h3 className="font-medium mb-2 flex items-center gap-2">
+                        <Database className="h-4 w-4" />
+                        Right to Access
+                      </h3>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        You have the right to know what personal data we hold about you and how it's used.
                       </p>
-                      <Button size="sm" variant="outline">Request Data Export</Button>
+                      <div className="text-sm space-y-2 mb-3">
+                        <p><strong>What you can access:</strong></p>
+                        <ul className="ml-4 space-y-1">
+                          <li>• Account profile and authentication data</li>
+                          <li>• All events you've organized or participated in</li>
+                          <li>• Team registrations and player information</li>
+                          <li>• Payment history and ticket purchases</li>
+                          <li>• Match results and performance statistics</li>
+                          <li>• Communication logs and support tickets</li>
+                        </ul>
+                      </div>
+                      <Button size="sm" variant="outline" className="w-full">Download My Complete Data</Button>
                     </div>
 
-                    <div className="border rounded-lg p-4">
-                      <h3 className="font-medium mb-2">Right to Rectification</h3>
-                      <p className="text-sm text-muted-foreground mb-2">
-                        You can correct inaccurate or incomplete personal data.
+                    <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
+                      <h3 className="font-medium mb-2 flex items-center gap-2">
+                        <UserCheck className="h-4 w-4" />
+                        Right to Rectification
+                      </h3>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        You can correct inaccurate or incomplete personal data we hold about you.
                       </p>
-                      <Button size="sm" variant="outline">Update My Data</Button>
+                      <div className="text-sm space-y-2 mb-3">
+                        <p><strong>What you can update:</strong></p>
+                        <ul className="ml-4 space-y-1">
+                          <li>• Personal profile information (name, contact details)</li>
+                          <li>• Team and player information</li>
+                          <li>• Event details and settings</li>
+                          <li>• Payment and billing information</li>
+                          <li>• Communication preferences</li>
+                        </ul>
+                      </div>
+                      <Button size="sm" variant="outline" className="w-full">Update My Information</Button>
                     </div>
 
-                    <div className="border rounded-lg p-4">
-                      <h3 className="font-medium mb-2">Right to Erasure</h3>
-                      <p className="text-sm text-muted-foreground mb-2">
-                        You can request deletion of your personal data ("right to be forgotten").
+                    <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
+                      <h3 className="font-medium mb-2 flex items-center gap-2">
+                        <Trash2 className="h-4 w-4" />
+                        Right to Erasure (Right to be Forgotten)
+                      </h3>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        You can request deletion of your personal data when it's no longer needed.
                       </p>
-                      <Button size="sm" variant="outline">Delete My Data</Button>
+                      <div className="text-sm space-y-2 mb-3">
+                        <p><strong>What gets deleted:</strong></p>
+                        <ul className="ml-4 space-y-1">
+                          <li>• Your account and profile data</li>
+                          <li>• All events you've created</li>
+                          <li>• Team registrations and participation records</li>
+                          <li>• Payment history and financial data</li>
+                          <li>• Communication logs and activity history</li>
+                        </ul>
+                        <p className="text-xs text-orange-600 dark:text-orange-400 mt-2">
+                          <strong>Note:</strong> Some data may be retained for legal obligations (tax records, etc.)
+                        </p>
+                      </div>
+                      <Button size="sm" variant="destructive" className="w-full">Request Data Deletion</Button>
                     </div>
 
-                    <div className="border rounded-lg p-4">
-                      <h3 className="font-medium mb-2">Right to Portability</h3>
-                      <p className="text-sm text-muted-foreground mb-2">
-                        You can request your data in a machine-readable format.
+                    <div className="bg-purple-50 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-800 rounded-lg p-4">
+                      <h3 className="font-medium mb-2 flex items-center gap-2">
+                        <Download className="h-4 w-4" />
+                        Right to Portability
+                      </h3>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        You can request your data in a structured, machine-readable format.
                       </p>
-                      <Button size="sm" variant="outline">Export My Data</Button>
+                      <div className="text-sm space-y-2 mb-3">
+                        <p><strong>Available formats:</strong></p>
+                        <ul className="ml-4 space-y-1">
+                          <li>• CSV files for tabular data (events, participants, etc.)</li>
+                          <li>• JSON files for structured data</li>
+                          <li>• PDF reports for human-readable summaries</li>
+                          <li>• Complete data package for migration to other services</li>
+                        </ul>
+                      </div>
+                      <Button size="sm" variant="outline" className="w-full">Export in Machine-Readable Format</Button>
                     </div>
 
-                    <div className="border rounded-lg p-4">
-                      <h3 className="font-medium mb-2">Right to Object</h3>
-                      <p className="text-sm text-muted-foreground mb-2">
-                        You can object to processing of your personal data.
+                    <div className="bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-800 rounded-lg p-4">
+                      <h3 className="font-medium mb-2 flex items-center gap-2">
+                        <AlertTriangle className="h-4 w-4" />
+                        Right to Object & Restrict Processing
+                      </h3>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        You can object to or restrict how we process your personal data.
                       </p>
-                      <Button size="sm" variant="outline">Object to Processing</Button>
+                      <div className="text-sm space-y-2 mb-3">
+                        <p><strong>You can object to:</strong></p>
+                        <ul className="ml-4 space-y-1">
+                          <li>• Direct marketing communications</li>
+                          <li>• Analytics and tracking cookies</li>
+                          <li>• Data sharing with third-party services</li>
+                          <li>• Automated decision-making processes</li>
+                        </ul>
+                      </div>
+                      <Button size="sm" variant="outline" className="w-full">Manage Processing Preferences</Button>
                     </div>
                   </div>
                 </div>
@@ -201,58 +333,119 @@ export default function PrivacyPolicy({ onBack }: PrivacyPolicyProps) {
                 <div>
                   <h2 className="text-xl font-semibold mb-3 flex items-center gap-2">
                     <Cookie className="h-5 w-5" />
-                    Cookie Policy
+                    Cookie & Tracking Policy
                   </h2>
                   
                   <div className="space-y-4">
-                    <p className="text-muted-foreground">
-                      We use cookies and similar technologies to enhance your experience on our platform.
+                    <p className="text-muted-foreground mb-4">
+                      PitchPro uses cookies and similar technologies to provide secure tournament management services and enhance your experience. 
+                      This policy explains what we use and why.
                     </p>
 
-                    <div className="grid gap-4">
-                      <div className="border rounded-lg p-4">
-                        <h3 className="font-medium mb-2">Essential Cookies</h3>
+                    <div className="grid gap-4 md:grid-cols-2">
+                      <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
+                        <h3 className="font-medium mb-2 text-red-900 dark:text-red-100">Essential Cookies</h3>
                         <p className="text-sm text-muted-foreground mb-2">
-                          Required for the website to function properly.
+                          Required for core tournament management functionality:
                         </p>
-                        <ul className="text-xs text-muted-foreground">
-                          <li>• Authentication and session management</li>
-                          <li>• Security and fraud prevention</li>
-                          <li>• Shopping cart and booking functionality</li>
+                        <ul className="text-xs text-muted-foreground space-y-1">
+                          <li>• <strong>Authentication:</strong> Login sessions, access tokens, security</li>
+                          <li>• <strong>Event Management:</strong> Registration forms, booking processes</li>
+                          <li>• <strong>Security:</strong> CSRF protection, fraud prevention</li>
+                          <li>• <strong>Functionality:</strong> Shopping cart, payment processing</li>
+                          <li>• <strong>Platform:</strong> Sidebar preferences, UI settings</li>
                         </ul>
+                        <p className="text-xs text-red-700 dark:text-red-300 mt-2">
+                          <strong>Cannot be disabled</strong> - Platform won't function without these
+                        </p>
                       </div>
 
-                      <div className="border rounded-lg p-4">
-                        <h3 className="font-medium mb-2">Analytics Cookies</h3>
+                      <div className="bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+                        <h3 className="font-medium mb-2 text-blue-900 dark:text-blue-100">Analytics Cookies</h3>
                         <p className="text-sm text-muted-foreground mb-2">
-                          Help us understand how visitors use our website.
+                          Help us improve PitchPro for tournament organizers:
                         </p>
-                        <ul className="text-xs text-muted-foreground">
-                          <li>• Page views and user journeys</li>
-                          <li>• Performance monitoring</li>
-                          <li>• Error tracking</li>
+                        <ul className="text-xs text-muted-foreground space-y-1">
+                          <li>• <strong>Usage Analytics:</strong> Page views, feature usage, user flows</li>
+                          <li>• <strong>Performance:</strong> Load times, error rates, crash reports</li>
+                          <li>• <strong>Tournament Insights:</strong> Popular sports, event sizes, registration patterns</li>
+                          <li>• <strong>Geographic Data:</strong> Approximate location for regional features</li>
                         </ul>
+                        <p className="text-xs text-blue-700 dark:text-blue-300 mt-2">
+                          <strong>Optional</strong> - Can be disabled without affecting core functionality
+                        </p>
                       </div>
 
-                      <div className="border rounded-lg p-4">
-                        <h3 className="font-medium mb-2">Functional Cookies</h3>
+                      <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
+                        <h3 className="font-medium mb-2 text-green-900 dark:text-green-100">Functional Cookies</h3>
                         <p className="text-sm text-muted-foreground mb-2">
-                          Enable enhanced functionality and personalization.
+                          Enhanced features for better tournament management:
                         </p>
-                        <ul className="text-xs text-muted-foreground">
-                          <li>• Remembering preferences</li>
-                          <li>• Language and region settings</li>
-                          <li>• Customized content</li>
+                        <ul className="text-xs text-muted-foreground space-y-1">
+                          <li>• <strong>Personalization:</strong> Sport preferences, event recommendations</li>
+                          <li>• <strong>Convenience:</strong> Remembered event details, auto-fill forms</li>
+                          <li>• <strong>Communication:</strong> Notification preferences, messaging settings</li>
+                          <li>• <strong>Accessibility:</strong> Theme preferences, language settings</li>
                         </ul>
+                        <p className="text-xs text-green-700 dark:text-green-300 mt-2">
+                          <strong>Optional</strong> - Enhances but not required for basic use
+                        </p>
+                      </div>
+
+                      <div className="bg-purple-50 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-800 rounded-lg p-4">
+                        <h3 className="font-medium mb-2 text-purple-900 dark:text-purple-100">Marketing Cookies</h3>
+                        <p className="text-sm text-muted-foreground mb-2">
+                          For promotional activities (limited and respectful):
+                        </p>
+                        <ul className="text-xs text-muted-foreground space-y-1">
+                          <li>• <strong>Event Promotion:</strong> Similar tournaments you might like</li>
+                          <li>• <strong>Platform Updates:</strong> New features, improvements</li>
+                          <li>• <strong>Partnership Offers:</strong> Relevant services for organizers</li>
+                          <li>• <strong>Retargeting:</strong> Reminders about incomplete registrations</li>
+                        </ul>
+                        <p className="text-xs text-purple-700 dark:text-purple-300 mt-2">
+                          <strong>Optional</strong> - Never shared with third parties
+                        </p>
                       </div>
                     </div>
 
-                    <div className="bg-muted/50 p-4 rounded-lg">
-                      <h3 className="font-medium mb-2">Managing Cookies</h3>
+                    <div className="bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-800 rounded-lg p-4">
+                      <h3 className="font-medium mb-2 text-orange-900 dark:text-orange-100">Third-Party Services</h3>
                       <p className="text-sm text-muted-foreground mb-2">
-                        You can control cookies through your browser settings or our cookie consent banner.
+                        We integrate with trusted services for tournament management:
                       </p>
-                      <Button size="sm" variant="outline">Update Cookie Preferences</Button>
+                      <ul className="text-xs text-muted-foreground space-y-1">
+                        <li>• <strong>Payment Processors:</strong> Stripe, PayPal (secure transactions only)</li>
+                        <li>• <strong>Analytics:</strong> Google Analytics (anonymized data only)</li>
+                        <li>• <strong>Communication:</strong> Email services (transactional emails only)</li>
+                        <li>• <strong>Storage:</strong> Cloud providers (encrypted data storage)</li>
+                        <li>• <strong>Mapping:</strong> Location services (venue directions only)</li>
+                      </ul>
+                      <p className="text-xs text-orange-700 dark:text-orange-300 mt-2">
+                        <strong>Note:</strong> These services have their own privacy policies
+                      </p>
+                    </div>
+
+                    <div className="bg-muted/50 p-4 rounded-lg">
+                      <h3 className="font-medium mb-2">Managing Your Preferences</h3>
+                      <div className="text-sm text-muted-foreground space-y-3">
+                        <p>
+                          <strong>Cookie Consent Banner:</strong> Appears on first visit, lets you choose preferences
+                        </p>
+                        <p>
+                          <strong>Browser Settings:</strong> Most browsers allow blocking/deleting cookies
+                        </p>
+                        <p>
+                          <strong>Data Rights:</strong> Use "Data Rights" in authenticated area to manage all preferences
+                        </p>
+                        <p>
+                          <strong>Impact:</strong> Disabling non-essential cookies may affect some features but won't break core functionality
+                        </p>
+                      </div>
+                      <div className="flex gap-2 mt-4">
+                        <Button size="sm" variant="outline">Update Cookie Preferences</Button>
+                        <Button size="sm" variant="outline">Clear All Data</Button>
+                      </div>
                     </div>
                   </div>
                 </div>

@@ -206,13 +206,13 @@ function Landing() {
       <CookieConsent />
       
       {showPrivacyPolicy && (
-        <div className="fixed inset-0 z-50 bg-background">
+        <div className="fixed inset-0 z-[9999] bg-background overflow-y-auto">
           <PrivacyPolicy onBack={() => setShowPrivacyPolicy(false)} />
         </div>
       )}
       
       {showDataProtection && (
-        <div className="fixed inset-0 z-50 bg-background">
+        <div className="fixed inset-0 z-[9999] bg-background overflow-y-auto">
           <DataProtection onBack={() => setShowDataProtection(false)} />
         </div>
       )}
