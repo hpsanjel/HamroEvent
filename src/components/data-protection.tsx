@@ -4,9 +4,30 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Shield, Download, Trash2, AlertTriangle, CheckCircle, FileText, ArrowLeft, Settings } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Shield,
+  Download,
+  Trash2,
+  AlertTriangle,
+  CheckCircle,
+  FileText,
+  ArrowLeft,
+  Settings,
+} from "lucide-react";
 import { toast } from "sonner";
 
 interface DataProtectionProps {
@@ -20,13 +41,12 @@ export default function DataProtection({ onBack }: DataProtectionProps) {
   const [deleteConfirmation, setDeleteConfirmation] = useState("");
   const [currentConsent, setCurrentConsent] = useState<any>(null);
 
-
   const handleDataExport = async () => {
     setIsExporting(true);
     try {
       // Simulate data export
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
       const userData = {
         personalInfo: {
           name: "User Name",
@@ -40,11 +60,11 @@ export default function DataProtection({ onBack }: DataProtectionProps) {
         exportedAt: new Date().toISOString(),
       };
 
-      const blob = new Blob([JSON.stringify(userData, null, 2)], { type: 'application/json' });
+      const blob = new Blob([JSON.stringify(userData, null, 2)], { type: "application/json" });
       const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
+      const a = document.createElement("a");
       a.href = url;
-      a.download = `pitchpro-data-export-${new Date().toISOString().split('T')[0]}.json`;
+      a.download = `pitchpro-data-export-${new Date().toISOString().split("T")[0]}.json`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -67,9 +87,11 @@ export default function DataProtection({ onBack }: DataProtectionProps) {
     setIsDeleting(true);
     try {
       // Simulate data deletion
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      toast.success("Your data has been scheduled for deletion. You will receive a confirmation email.");
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
+      toast.success(
+        "Your data has been scheduled for deletion. You will receive a confirmation email.",
+      );
       setDeleteReason("");
       setDeleteConfirmation("");
     } catch (error) {
@@ -160,11 +182,7 @@ export default function DataProtection({ onBack }: DataProtectionProps) {
                     </ul>
                   </div>
                 </div>
-                <Button 
-                  onClick={handleDataExport} 
-                  disabled={isExporting}
-                  className="w-full"
-                >
+                <Button onClick={handleDataExport} disabled={isExporting} className="w-full">
                   {isExporting ? "Exporting..." : "Export My Data"}
                 </Button>
               </CardContent>
@@ -182,7 +200,7 @@ export default function DataProtection({ onBack }: DataProtectionProps) {
                 <p className="text-sm text-muted-foreground">
                   Request permanent deletion of all your personal data from our systems.
                 </p>
-                
+
                 <Dialog>
                   <DialogTrigger asChild>
                     <Button variant="destructive" className="w-full">
@@ -199,10 +217,11 @@ export default function DataProtection({ onBack }: DataProtectionProps) {
                     <div className="space-y-4">
                       <div className="bg-red-50 dark:bg-red-950/20 p-3 rounded-lg">
                         <p className="text-sm text-red-800 dark:text-red-200">
-                          <strong>Warning:</strong> This action cannot be undone. All your data will be permanently deleted.
+                          <strong>Warning:</strong> This action cannot be undone. All your data will
+                          be permanently deleted.
                         </p>
                       </div>
-                      
+
                       <div className="space-y-2">
                         <Label htmlFor="reason">Reason for deletion (optional)</Label>
                         <Textarea
@@ -216,7 +235,8 @@ export default function DataProtection({ onBack }: DataProtectionProps) {
 
                       <div className="space-y-2">
                         <Label htmlFor="confirmation">
-                          Type <code className="bg-muted px-1 rounded text-xs">DELETE MY DATA</code> to confirm
+                          Type <code className="bg-muted px-1 rounded text-xs">DELETE MY DATA</code>{" "}
+                          to confirm
                         </Label>
                         <Input
                           id="confirmation"
@@ -235,10 +255,13 @@ export default function DataProtection({ onBack }: DataProtectionProps) {
                         >
                           {isDeleting ? "Processing..." : "Delete My Data"}
                         </Button>
-                        <Button variant="outline" onClick={() => {
-                          setDeleteReason("");
-                          setDeleteConfirmation("");
-                        }}>
+                        <Button
+                          variant="outline"
+                          onClick={() => {
+                            setDeleteReason("");
+                            setDeleteConfirmation("");
+                          }}
+                        >
                           Cancel
                         </Button>
                       </div>
@@ -262,7 +285,9 @@ export default function DataProtection({ onBack }: DataProtectionProps) {
                 <Button variant="outline" className="h-auto p-4 flex flex-col gap-2">
                   <Download className="h-6 w-6" />
                   <span>Download All Data</span>
-                  <span className="text-xs text-muted-foreground">Export your personal information</span>
+                  <span className="text-xs text-muted-foreground">
+                    Export your personal information
+                  </span>
                 </Button>
                 <Button variant="outline" className="h-auto p-4 flex flex-col gap-2">
                   <Shield className="h-6 w-6" />
@@ -293,31 +318,47 @@ export default function DataProtection({ onBack }: DataProtectionProps) {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-3">
-                <Button variant="outline" className="w-full justify-start" onClick={() => {
-                  toast.success("Account deactivated temporarily. You can reactivate anytime.");
-                }}>
+                <Button
+                  variant="outline"
+                  className="w-full justify-start"
+                  onClick={() => {
+                    toast.success("Account deactivated temporarily. You can reactivate anytime.");
+                  }}
+                >
                   <div className="flex items-center gap-2">
                     <AlertTriangle className="h-4 w-4" />
                     <div className="text-left">
                       <div className="font-medium">Deactivate Account</div>
-                      <div className="text-xs text-muted-foreground">Temporarily disable your account</div>
+                      <div className="text-xs text-muted-foreground">
+                        Temporarily disable your account
+                      </div>
                     </div>
                   </div>
                 </Button>
-                
-                <Button variant="outline" className="w-full justify-start" onClick={() => {
-                  toast.success("All data anonymized. Personal information removed.");
-                }}>
+
+                <Button
+                  variant="outline"
+                  className="w-full justify-start"
+                  onClick={() => {
+                    toast.success("All data anonymized. Personal information removed.");
+                  }}
+                >
                   <div className="flex items-center gap-2">
                     <Shield className="h-4 w-4" />
                     <div className="text-left">
                       <div className="font-medium">Anonymize Data</div>
-                      <div className="text-xs text-muted-foreground">Remove personal info, keep activity</div>
+                      <div className="text-xs text-muted-foreground">
+                        Remove personal info, keep activity
+                      </div>
                     </div>
                   </div>
                 </Button>
-                
-                <Button variant="destructive" className="w-full justify-start" onClick={handleDataDeletion}>
+
+                <Button
+                  variant="destructive"
+                  className="w-full justify-start"
+                  onClick={handleDataDeletion}
+                >
                   <div className="flex items-center gap-2">
                     <Trash2 className="h-4 w-4" />
                     <div className="text-left">
@@ -343,30 +384,36 @@ export default function DataProtection({ onBack }: DataProtectionProps) {
                 <div>
                   <h3 className="font-medium mb-2">Legal Basis for Processing</h3>
                   <p className="text-sm text-muted-foreground">
-                    We process your data based on your consent, contractual necessity, and legal obligations.
+                    We process your data based on your consent, contractual necessity, and legal
+                    obligations.
                   </p>
                 </div>
 
                 <div>
                   <h3 className="font-medium mb-2">Data Retention</h3>
                   <p className="text-sm text-muted-foreground">
-                    We retain your data only as long as necessary for the purposes outlined in our privacy policy.
+                    We retain your data only as long as necessary for the purposes outlined in our
+                    privacy policy.
                   </p>
                 </div>
 
                 <div>
                   <h3 className="font-medium mb-2">International Transfers</h3>
                   <p className="text-sm text-muted-foreground">
-                    Your data is processed within the EU/EEA and protected by appropriate safeguards.
+                    Your data is processed within the EU/EEA and protected by appropriate
+                    safeguards.
                   </p>
                 </div>
 
                 <div>
                   <h3 className="font-medium mb-2">Contact for Data Rights</h3>
                   <p className="text-sm text-muted-foreground">
-                    For any data protection inquiries, contact our Data Protection Officer at{' '}
-                    <a href="mailto:dpo@pitchpro.com" className="text-primary hover:underline">
-                      dpo@pitchpro.com
+                    For any data protection inquiries, contact our Data Protection Officer at{" "}
+                    <a
+                      href="mailto:contact@sanjeltech.com"
+                      className="text-primary hover:underline"
+                    >
+                      contact@sanjeltech.com
                     </a>
                   </p>
                 </div>
@@ -382,47 +429,58 @@ export default function DataProtection({ onBack }: DataProtectionProps) {
             <CardContent>
               <div className="space-y-4">
                 <div className="text-sm text-muted-foreground">
-                  Your cookie consent choices are saved locally in your browser and are used to customize your experience.
+                  Your cookie consent choices are saved locally in your browser and are used to
+                  customize your experience.
                 </div>
                 <div className="grid gap-3">
                   <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
                     <span className="text-sm font-medium">Essential Cookies</span>
-                    <span className="text-xs px-2 py-1 bg-green-100 text-green-800 rounded-full">Always Active</span>
+                    <span className="text-xs px-2 py-1 bg-green-100 text-green-800 rounded-full">
+                      Always Active
+                    </span>
                   </div>
                   <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
                     <span className="text-sm font-medium">Analytics Cookies</span>
-                    <span className={`text-xs px-2 py-1 rounded-full ${
-                      currentConsent?.analytics 
-                        ? "bg-green-100 text-green-800" 
-                        : "bg-gray-100 text-gray-800"
-                    }`}>
+                    <span
+                      className={`text-xs px-2 py-1 rounded-full ${
+                        currentConsent?.analytics
+                          ? "bg-green-100 text-green-800"
+                          : "bg-gray-100 text-gray-800"
+                      }`}
+                    >
                       {currentConsent?.analytics ? "Active" : "Not Set"}
                     </span>
                   </div>
                   <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
                     <span className="text-sm font-medium">Marketing Cookies</span>
-                    <span className={`text-xs px-2 py-1 rounded-full ${
-                      currentConsent?.marketing 
-                        ? "bg-green-100 text-green-800" 
-                        : "bg-gray-100 text-gray-800"
-                    }`}>
+                    <span
+                      className={`text-xs px-2 py-1 rounded-full ${
+                        currentConsent?.marketing
+                          ? "bg-green-100 text-green-800"
+                          : "bg-gray-100 text-gray-800"
+                      }`}
+                    >
                       {currentConsent?.marketing ? "Active" : "Not Set"}
                     </span>
                   </div>
                   <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
                     <span className="text-sm font-medium">Functional Cookies</span>
-                    <span className={`text-xs px-2 py-1 rounded-full ${
-                      currentConsent?.functional 
-                        ? "bg-green-100 text-green-800" 
-                        : "bg-gray-100 text-gray-800"
-                    }`}>
+                    <span
+                      className={`text-xs px-2 py-1 rounded-full ${
+                        currentConsent?.functional
+                          ? "bg-green-100 text-green-800"
+                          : "bg-gray-100 text-gray-800"
+                      }`}
+                    >
                       {currentConsent?.functional ? "Active" : "Not Set"}
                     </span>
                   </div>
                 </div>
                 <div className="text-xs text-muted-foreground">
-                  <strong>Storage Location:</strong> Browser localStorage<br />
-                  <strong>Data Format:</strong> JSON encrypted<br />
+                  <strong>Storage Location:</strong> Browser localStorage
+                  <br />
+                  <strong>Data Format:</strong> JSON encrypted
+                  <br />
                   <strong>Retention:</strong> Until you clear your browser data or withdraw consent
                 </div>
                 <Button variant="outline" size="sm" onClick={() => window.location.reload()}>

@@ -8,24 +8,32 @@ import {
   HeartHandshake,
   ScanLine,
   ArrowRight,
-  Zap,
   CheckCircle2,
   Ticket,
   CreditCard,
   Upload,
   Search,
+  Download,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Footer from "@/components/footer";
+import { useAuth } from "@/hooks/use-auth";
 import hero from "@/assets/hero.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "PitchPro — Run Your Sports Tournament Like a Pro" },
-      { name: "description", content: "Football, cricket, basketball — manage registrations, payments, brackets, budgets and check-in from one app. Built for local organizers." },
+      {
+        name: "description",
+        content:
+          "Football, cricket, basketball — manage registrations, payments, brackets, budgets and check-in from one app. Built for local organizers.",
+      },
       { property: "og:title", content: "PitchPro — Sports Event Manager" },
-      { property: "og:description", content: "End-to-end tournament management for local organizers." },
+      {
+        property: "og:description",
+        content: "End-to-end tournament management for local organizers.",
+      },
       { property: "og:image", content: hero },
       { property: "twitter:image", content: hero },
     ],
@@ -35,20 +43,62 @@ export const Route = createFileRoute("/")({
 
 const features = [
   { icon: Trophy, title: "Event CRUD", text: "Create, publish and manage tournaments in seconds." },
-  { icon: QrCode, title: "Share via QR", text: "One-tap share to social + scannable QR for instant registration." },
-  { icon: Users, title: "Team registration", text: "Public form captures team, players, payment proof — admin approves." },
-  { icon: Upload, title: "Payment proof", text: "Teams upload payment screenshots, organizers approve with one click." },
-  { icon: Ticket, title: "Event passes", text: "Generate free or paid passes with QR codes for attendees." },
-  { icon: CreditCard, title: "Ticket management", text: "Sell, track and validate tickets with integrated QR scanning." },
-  { icon: Search, title: "Ticket lookup", text: "Public can track their ticket status online using order ID or phone." },
-  { icon: CalendarRange, title: "Auto bracket", text: "Generate single-elimination tie sheet from approved teams." },
-  { icon: Wallet, title: "Budget tracker", text: "Income, expenses, prize pool — see the bottom line live." },
-  { icon: HeartHandshake, title: "Donations & sponsors", text: "Log every contribution with totals." },
-  { icon: ScanLine, title: "Event-day check-in", text: "Verify players & visitors instantly at the gate." },
-  { icon: Zap, title: "Works offline", text: "Installable PWA. Add to home screen. Open like a native app." },
+  {
+    icon: QrCode,
+    title: "Share via QR",
+    text: "One-tap share to social + scannable QR for instant registration.",
+  },
+  {
+    icon: Users,
+    title: "Team registration",
+    text: "Public form captures team, players, payment proof — admin approves.",
+  },
+  {
+    icon: Upload,
+    title: "Payment proof",
+    text: "Teams upload payment screenshots, organizers approve with one click.",
+  },
+  {
+    icon: Ticket,
+    title: "Event passes",
+    text: "Generate free or paid passes with QR codes for attendees.",
+  },
+  {
+    icon: CreditCard,
+    title: "Ticket management",
+    text: "Sell, track and validate tickets with integrated QR scanning.",
+  },
+  {
+    icon: Search,
+    title: "Ticket lookup",
+    text: "Public can track their ticket status online using order ID or phone.",
+  },
+  {
+    icon: CalendarRange,
+    title: "Auto bracket",
+    text: "Generate single-elimination tie sheet from approved teams.",
+  },
+  {
+    icon: Wallet,
+    title: "Budget tracker",
+    text: "Income, expenses, prize pool — see the bottom line live.",
+  },
+  {
+    icon: HeartHandshake,
+    title: "Donations & sponsors",
+    text: "Log every contribution with totals.",
+  },
+  {
+    icon: ScanLine,
+    title: "Event-day check-in",
+    text: "Verify players & visitors instantly at the gate.",
+  },
+  { icon: Download, title: "Export Data", text: "Export all your event data with a single click." },
 ];
 
 function Landing() {
+  const { user } = useAuth();
+
   return (
     <div className="min-h-screen">
       {/* Header */}
@@ -65,8 +115,8 @@ function Landing() {
               <Link to="/lookup">Check Ticket</Link>
             </Button>
             <Button asChild size="sm">
-              <Link to="/login">
-                Sign in <ArrowRight className="ml-1 h-4 w-4" />
+              <Link to={user ? "/app" : "/login"}>
+                {user ? "Dashboard" : "Sign in"} <ArrowRight className="ml-1 h-4 w-4" />
               </Link>
             </Button>
           </div>
@@ -97,7 +147,7 @@ function Landing() {
               </Button>
             </div>
             <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
-              {["Free to use", "Installable PWA", "Organizer sign-in"].map((t) => (
+              {["Free to use", "Organizer sign-in"].map((t) => (
                 <div key={t} className="flex items-center gap-1.5">
                   <CheckCircle2 className="h-4 w-4 text-primary" />
                   {t}
@@ -126,7 +176,8 @@ function Landing() {
               Everything for the whistle <span className="text-primary">to the trophy.</span>
             </h2>
             <p className="mt-4 text-muted-foreground">
-              One toolkit covering every step of your tournament — built around how local organizers actually work.
+              One toolkit covering every step of your tournament — built around how local organizers
+              actually work.
             </p>
           </div>
           <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -152,9 +203,21 @@ function Landing() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="grid gap-8 md:grid-cols-3">
             {[
-              { n: "01", t: "Create the event", d: "Sport, dates, venue, entry fee, payment QR — done in 2 minutes." },
-              { n: "02", t: "Share & collect teams", d: "Post the QR. Captains register, upload payment proof. You approve." },
-              { n: "03", t: "Run match-day", d: "Auto bracket, schedule, check-in, budget. Everything in your pocket." },
+              {
+                n: "01",
+                t: "Create the event",
+                d: "Sport, dates, venue, entry fee, payment QR — done in 2 minutes.",
+              },
+              {
+                n: "02",
+                t: "Share & collect teams",
+                d: "Post the QR. Captains register, upload payment proof. You approve.",
+              },
+              {
+                n: "03",
+                t: "Run match-day",
+                d: "Auto bracket, schedule, check-in, budget. Everything in your pocket.",
+              },
             ].map((s) => (
               <div key={s.n} className="rounded-2xl border border-border bg-card/40 p-8">
                 <div className="font-mono-num text-5xl font-bold text-primary">{s.n}</div>

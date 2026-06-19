@@ -17,7 +17,8 @@ import {
   ZoomIn,
   ZoomOut,
   RotateCcw,
-  X
+  X,
+  Maximize2,
 } from "lucide-react";
 
 interface AccessibilitySettings {
@@ -26,6 +27,7 @@ interface AccessibilitySettings {
   hideImages: boolean;
   grayscale: boolean;
   fontSize: number;
+  pageZoom: number;
   darkMode: boolean;
   reducedMotion: boolean;
   focusVisible: boolean;
@@ -39,6 +41,7 @@ export default function AccessibilityWidget() {
     hideImages: false,
     grayscale: false,
     fontSize: 100,
+    pageZoom: 100,
     darkMode: false,
     reducedMotion: false,
     focusVisible: false,
@@ -48,7 +51,7 @@ export default function AccessibilityWidget() {
   useEffect(() => {
     const savedSettings = localStorage.getItem('accessibility-settings');
     if (savedSettings) {
-      const parsed = JSON.parse(savedSettings);
+      const parsed = { ...settings, ...JSON.parse(savedSettings) };
       setSettings(parsed);
       applySettings(parsed);
     } else {
@@ -65,11 +68,11 @@ export default function AccessibilityWidget() {
   // Apply settings to document
   const applySettings = (newSettings: AccessibilitySettings) => {
     const root = document.documentElement;
-    const body = document.body;
 
     // Remove all accessibility classes first
     root.classList.remove('high-contrast', 'large-text', 'hide-images', 'grayscale', 'dark-mode', 'reduced-motion', 'focus-visible');
-    body.style.removeProperty('font-size');
+    root.style.removeProperty('font-size');
+    document.body.style.removeProperty('zoom');
 
     // Apply new settings
     if (newSettings.highContrast) {
@@ -96,7 +99,10 @@ export default function AccessibilityWidget() {
     }
 
     // Apply font size
-    body.style.fontSize = `${newSettings.fontSize}%`;
+    root.style.fontSize = `${newSettings.fontSize}%`;
+
+    // Apply page zoom
+    document.body.style.zoom = `${newSettings.pageZoom}%`;
 
     // Save to localStorage
     localStorage.setItem('accessibility-settings', JSON.stringify(newSettings));
@@ -118,9 +124,10 @@ export default function AccessibilityWidget() {
       hideImages: false,
       grayscale: false,
       fontSize: 100,
-      darkMode: false,
+      pageZoom: 100,
+      darkMode: true,
       reducedMotion: false,
-      focusVisible: true,
+      focusVisible: false,
     };
     setSettings(defaultSettings);
     applySettings(defaultSettings);
@@ -134,6 +141,16 @@ export default function AccessibilityWidget() {
   const decreaseFontSize = () => {
     const newSize = Math.max(settings.fontSize - 10, 80);
     updateSetting('fontSize', newSize);
+  };
+
+  const increasePageZoom = () => {
+    const newZoom = Math.min(settings.pageZoom + 10, 200);
+    updateSetting('pageZoom', newZoom);
+  };
+
+  const decreasePageZoom = () => {
+    const newZoom = Math.max(settings.pageZoom - 10, 80);
+    updateSetting('pageZoom', newZoom);
   };
 
   return (
@@ -157,7 +174,7 @@ export default function AccessibilityWidget() {
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
               <CardTitle className="text-lg flex items-center gap-2">
-                <Accessibility className="w-5 h-5" />
+                <Accessibility className="w-5 h-5" data-lucide />
                 Accessibility Settings
               </CardTitle>
               <div className="flex gap-2">
@@ -219,7 +236,7 @@ export default function AccessibilityWidget() {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <Type className="w-4 h-4" />
+                  <Type className="w-4 h-4" data-lucide />
                   <Label className="text-sm">Font Size</Label>
                 </div>
                 <div className="flex items-center gap-1">
@@ -247,6 +264,45 @@ export default function AccessibilityWidget() {
               <Slider
                 value={[settings.fontSize]}
                 onValueChange={([value]) => updateSetting('fontSize', value)}
+                min={80}
+                max={200}
+                step={10}
+                className="w-full"
+              />
+            </div>
+
+            {/* Page Zoom */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Maximize2 className="w-4 h-4" data-lucide />
+                  <Label className="text-sm">Page Zoom</Label>
+                </div>
+                <div className="flex items-center gap-1">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={decreasePageZoom}
+                    className="w-8 h-8 p-0"
+                  >
+                    <ZoomOut className="w-3 h-3" data-lucide />
+                  </Button>
+                  <span className="text-sm font-medium w-12 text-center">
+                    {settings.pageZoom}%
+                  </span>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={increasePageZoom}
+                    className="w-8 h-8 p-0"
+                  >
+                    <ZoomIn className="w-3 h-3" data-lucide />
+                  </Button>
+                </div>
+              </div>
+              <Slider
+                value={[settings.pageZoom]}
+                onValueChange={([value]) => updateSetting('pageZoom', value)}
                 min={80}
                 max={200}
                 step={10}
@@ -325,7 +381,7 @@ export default function AccessibilityWidget() {
             {/* Enhanced Focus */}
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Eye className="w-4 h-4" />
+                <Eye className="w-4 h-4" data-lucide />
                 <Label className="text-sm">Enhanced Focus</Label>
               </div>
               <Switch

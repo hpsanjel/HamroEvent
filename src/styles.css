@@ -206,21 +206,6 @@
     display: none !important;
   }
 
-  /* Hide all icons inside accessibility widget except close button and floating accessibility button */
-  .hide-images .accessibility-widget svg:not([data-lucide="X"]),
-  .hide-images .accessibility-widget button:not([data-lucide="X"]),
-  .hide-images .accessibility-widget :not(button):not([data-lucide="X"]) svg:not([data-lucide="X"]) {
-    display: none !important;
-  }
-
-  /* Ensure close button and floating accessibility button are always visible */
-  .hide-images .accessibility-widget button[data-lucide="X"],
-  .hide-images .accessibility-widget svg[data-lucide="X"],
-  .hide-images .accessibility-widget button[data-lucide="accessibility-button"],
-  .hide-images .accessibility-widget svg[data-lucide="accessibility-button"] {
-    display: flex !important;
-  }
-
   .hide-images img::after,
   .hide-images [role="img"]::after {
     content: "[Image]";
