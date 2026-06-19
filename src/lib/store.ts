@@ -12,6 +12,7 @@ export type SportType =
   | "badminton"
   | "kabaddi"
   | "other";
+export type EventType = "sport" | "non-sport";
 export type EventStatus = "draft" | "published" | "live" | "completed";
 
 export interface SportsEvent {
@@ -19,6 +20,7 @@ export interface SportsEvent {
   ownerId?: string | null;
   name: string;
   sport: SportType;
+  type: EventType;
   description: string;
   venue: string;
   startDate: string;
@@ -178,6 +180,7 @@ function eventFromRow(r: any): SportsEvent {
     ownerId: r.owner_id ?? null,
     name: r.name,
     sport: r.sport,
+    type: r.event_type ?? "sport",
     description: r.description ?? "",
     venue: r.venue ?? "",
     startDate: r.start_date,
@@ -203,6 +206,7 @@ function eventToRow(e: SportsEvent) {
     owner_id: e.ownerId ?? currentUserId,
     name: e.name,
     sport: e.sport,
+    event_type: e.type,
     description: e.description,
     venue: e.venue,
     start_date: e.startDate,
@@ -819,10 +823,10 @@ export const ordersApi = {
     cache.orders = [...cache.orders.filter((x) => x.id !== o.id), o];
     emit("orders");
     const promise = supabase.from("ticket_orders").upsert(orderToRow(o));
-    return promise.then((r: any) => {
+    return Promise.resolve(promise).then((r: any) => {
       if (r?.error) console.error(`[pp] orders.upsert:`, r.error);
       return r;
-    }).catch((err) => {
+    }).catch((err: unknown) => {
       console.error(`[pp] orders.upsert rejected:`, err);
       return { error: err, data: null };
     });

@@ -131,9 +131,9 @@ function PublicTickets() {
             <Sparkles className="h-3.5 w-3.5" /> Powered by PitchPro
           </Link>
           <div className="mt-4 flex items-center gap-3">
-            <span className="text-4xl">{sportEmoji(event.sport)}</span>
+            <span className="text-4xl">{event.type === "non-sport" ? "📋" : sportEmoji(event.sport)}</span>
             <span className="rounded-full border border-primary/30 bg-primary/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-primary">
-              {sportLabel(event.sport)}
+              {event.type === "non-sport" ? "Event" : sportLabel(event.sport)}
             </span>
           </div>
           <h1 className="mt-3 font-display text-4xl font-bold sm:text-5xl">{event.name}</h1>
@@ -141,7 +141,7 @@ function PublicTickets() {
           <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
             <span className="flex items-center gap-1.5"><Calendar className="h-4 w-4" />{format(new Date(event.startDate), "PPP")}</span>
             <span className="flex items-center gap-1.5"><MapPin className="h-4 w-4" />{event.venue}</span>
-            <span className="flex items-center gap-1.5"><Trophy className="h-4 w-4" />Prize {fmtMoney(event.prizePool, event.currency)}</span>
+            {event.type !== "non-sport" && <span className="flex items-center gap-1.5"><Trophy className="h-4 w-4" />Prize {fmtMoney(event.prizePool, event.currency)}</span>}
           </div>
         </div>
       </div>

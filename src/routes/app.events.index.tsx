@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState, useCallback, useMemo } from "react";
-import { eventsApi, regsApi, type SportsEvent, type EventStatus, uid } from "@/lib/store";
+import { eventsApi, regsApi, type SportsEvent, type EventType, type EventStatus, uid } from "@/lib/store";
 import { useStoreSignal } from "@/hooks/use-store";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { SPORTS, sportEmoji } from "@/lib/sports";
+import { SPORTS, sportEmoji, sportLabel } from "@/lib/sports";
 import { CURRENCIES, currencySymbol } from "@/lib/currency";
 import { Plus, Pencil, Trash2, Share2, Calendar, MapPin, Trophy, Upload, X } from "lucide-react";
 import { format } from "date-fns";
@@ -25,6 +25,7 @@ const empty = (): SportsEvent => ({
   id: uid(),
   name: "",
   sport: "football",
+  type: "sport",
   description: "",
   venue: "",
   startDate: new Date(Date.now() + 7 * 86400000).toISOString().slice(0, 16),
@@ -89,11 +90,12 @@ function EventsList() {
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {events.map((e) => {
             const teamCount = regsApi.list(e.id).filter((r) => r.status === "approved").length;
+            const isNonSport = e.type === "non-sport";
             return (
               <div key={e.id} className="group flex flex-col rounded-2xl border border-border bg-card shadow-card overflow-hidden">
                 <div className="bg-gradient-pitch p-5">
                   <div className="flex items-start justify-between">
-                    <div className="text-3xl">{sportEmoji(e.sport)}</div>
+                    <div className="text-3xl">{isNonSport ? "📋" : sportEmoji(e.sport)}</div>
                     <span className={`rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest ${
                       e.status === "live" ? "bg-destructive/20 text-destructive" :
                       e.status === "published" ? "bg-primary/20 text-primary" :
@@ -109,12 +111,19 @@ function EventsList() {
                   <div className="mt-2 space-y-1 text-xs text-muted-foreground">
                     <div className="flex items-center gap-1.5"><Calendar className="h-3 w-3" />{format(new Date(e.startDate), "MMM d, yyyy")}</div>
                     <div className="flex items-center gap-1.5"><MapPin className="h-3 w-3" />{e.venue || "TBD"}</div>
+                    <div className="text-[11px] text-muted-foreground/70">{isNonSport ? "Event" : sportLabel(e.sport)}</div>
                   </div>
                 </div>
                 <div className="flex items-center justify-between border-t border-border px-5 py-3">
                   <div className="text-sm">
-                    <span className="font-mono-num font-bold text-primary">{teamCount}</span>
-                    <span className="text-muted-foreground"> / {e.maxTeams} teams</span>
+                    {isNonSport ? (
+                      <span className="text-muted-foreground">No teams</span>
+                    ) : (
+                      <>
+                        <span className="font-mono-num font-bold text-primary">{teamCount}</span>
+                        <span className="text-muted-foreground"> / {e.maxTeams} teams</span>
+                      </>
+                    )}
                   </div>
                   <div className="flex gap-1">
                     <Button size="icon" variant="ghost" onClick={() => setShareEvent(e)} title="Share">
@@ -200,18 +209,46 @@ function EventForm({
             <Label>Event name *</Label>
             <Input value={formData.name} onChange={(e) => set("name", e.target.value)} placeholder="Summer Football Cup 2026" />
           </div>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div>
-              <Label>Sport</Label>
-              <Select value={formData.sport} onValueChange={(v) => set("sport", v as SportsEvent["sport"])}>
-                <SelectTrigger><SelectValue /></SelectTrigger>
-                <SelectContent>
-                  {SPORTS.map((s) => (
-                    <SelectItem key={s.value} value={s.value}>{s.emoji} {s.label}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+          <div>
+            <Label>Event type</Label>
+            <div className="flex gap-2">
+              <Button
+                type="button"
+                variant={formData.type === "sport" ? "default" : "outline"}
+                className="flex-1"
+                onClick={() => set("type", "sport")}
+              >
+                🏆 Sport event
+              </Button>
+              <Button
+                type="button"
+                variant={formData.type === "non-sport" ? "default" : "outline"}
+                className="flex-1"
+                onClick={() => set("type", "non-sport")}
+              >
+                📋 Event
+              </Button>
             </div>
+            <p className="mt-1 text-[11px] text-muted-foreground">
+              {formData.type === "sport"
+                ? "Teams register, matches & brackets, budget, donations, tickets"
+                : "Tickets, budget & donations — no team registration"}
+            </p>
+          </div>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {formData.type === "sport" && (
+              <div>
+                <Label>Sport</Label>
+                <Select value={formData.sport} onValueChange={(v) => set("sport", v as SportsEvent["sport"])}>
+                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    {SPORTS.map((s) => (
+                      <SelectItem key={s.value} value={s.value}>{s.emoji} {s.label}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
             <div>
               <Label>Status</Label>
               <Select value={formData.status} onValueChange={(v) => set("status", v as EventStatus)}>
@@ -243,10 +280,12 @@ function EventForm({
               <Input type="datetime-local" value={formData.endDate} onChange={(e) => set("endDate", e.target.value)} />
             </div>
           </div>
-          <div>
-            <Label>Registration deadline</Label>
-            <Input type="datetime-local" value={formData.registrationDeadline} onChange={(e) => set("registrationDeadline", e.target.value)} />
-          </div>
+          {formData.type === "sport" && (
+            <div>
+              <Label>Registration deadline</Label>
+              <Input type="datetime-local" value={formData.registrationDeadline} onChange={(e) => set("registrationDeadline", e.target.value)} />
+            </div>
+          )}
           <div>
             <Label>Currency</Label>
             <Select value={formData.currency || "NOK"} onValueChange={(v) => set("currency", v)}>
@@ -258,20 +297,22 @@ function EventForm({
               </SelectContent>
             </Select>
           </div>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-            <div>
-              <Label>Max teams</Label>
-              <Input type="number" value={formData.maxTeams} onChange={(e) => set("maxTeams", Number(e.target.value))} />
+          {formData.type === "sport" && (
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+              <div>
+                <Label>Max teams</Label>
+                <Input type="number" value={formData.maxTeams} onChange={(e) => set("maxTeams", Number(e.target.value))} />
+              </div>
+              <div>
+                <Label>Entry fee ({sym})</Label>
+                <Input type="number" value={formData.entryFee} onChange={(e) => set("entryFee", Number(e.target.value))} />
+              </div>
+              <div>
+                <Label>Prize pool ({sym})</Label>
+                <Input type="number" value={formData.prizePool} onChange={(e) => set("prizePool", Number(e.target.value))} />
+              </div>
             </div>
-            <div>
-              <Label>Entry fee ({sym})</Label>
-              <Input type="number" value={formData.entryFee} onChange={(e) => set("entryFee", Number(e.target.value))} />
-            </div>
-            <div>
-              <Label>Prize pool ({sym})</Label>
-              <Input type="number" value={formData.prizePool} onChange={(e) => set("prizePool", Number(e.target.value))} />
-            </div>
-          </div>
+          )}
           <div>
             <Label>Payment instructions</Label>
             <Textarea

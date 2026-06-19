@@ -67,6 +67,7 @@ export default function App() {
       id: eventId,
       name: formData.name,
       sport: formData.sport,
+      type: "sport" as const,
       description: formData.description,
       venue: formData.venue,
       startDate: formData.startDate,

@@ -18,6 +18,7 @@ function Dashboard() {
     return <div className="mx-auto max-w-6xl py-12 text-sm text-muted-foreground">Loading dashboard…</div>;
   }
   const events = eventsApi.list();
+  const sportEvents = events.filter((e) => e.type === "sport");
   const allRegs = regsApi.list();
   const pending = allRegs.filter((r) => r.status === "pending").length;
   const approved = allRegs.filter((r) => r.status === "approved").length;
@@ -71,7 +72,7 @@ function Dashboard() {
       <div>
         <div className="mb-4 flex items-end justify-between">
           <h2 className="font-display text-2xl font-bold">Live & upcoming</h2>
-          <Link to="/app/events" className="text-sm text-primary hover:underline">
+          <Link to="/app/events" search={{ new: undefined }} className="text-sm text-primary hover:underline">
             All events →
           </Link>
         </div>
@@ -81,6 +82,7 @@ function Dashboard() {
           <div className="grid gap-4 md:grid-cols-2">
             {liveEvents.slice(0, 4).map((e) => {
               const eRegs = regsApi.list(e.id);
+              const isNonSport = e.type === "non-sport";
               return (
                 <Link
                   key={e.id}
@@ -90,7 +92,7 @@ function Dashboard() {
                 >
                   <div className="flex items-start justify-between">
                     <div>
-                      <div className="text-2xl">{sportEmoji(e.sport)}</div>
+                      <div className="text-2xl">{isNonSport ? "📋" : sportEmoji(e.sport)}</div>
                       <h3 className="mt-2 font-display text-xl font-bold">{e.name}</h3>
                       <div className="mt-1 text-xs text-muted-foreground">
                         {format(new Date(e.startDate), "MMM d")} • {e.venue}
@@ -101,7 +103,7 @@ function Dashboard() {
                     </span>
                   </div>
                   <div className="mt-4 flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground">{eRegs.length} teams</span>
+                    <span className="text-muted-foreground">{isNonSport ? "No teams" : `${eRegs.length} teams`}</span>
                     <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
                   </div>
                 </Link>

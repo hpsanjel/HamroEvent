@@ -19,6 +19,7 @@ function EventDetail() {
   const navigate = useNavigate();
   const ready = useHydrated();
   const event = eventsApi.get(eventId);
+  const isNonSport = event?.type === "non-sport";
   const [shareOpen, setShareOpen] = useState(false);
 
   if (!ready) {
@@ -63,25 +64,31 @@ function EventDetail() {
       <div className="overflow-hidden rounded-3xl border border-border bg-gradient-pitch shadow-card">
         <div className="p-6 sm:p-8">
           <div className="flex flex-wrap items-start justify-between gap-4">
-            <div>
-              <div className="flex items-center gap-3">
-                <span className="text-4xl">{sportEmoji(event.sport)}</span>
-                <span className="rounded-full border border-primary/30 bg-primary/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-primary">
-                  {sportLabel(event.sport)}
-                </span>
-                <span className={`rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest ${
-                  event.status === "live" ? "bg-destructive/20 text-destructive" :
-                  event.status === "published" ? "bg-success/20 text-success" :
-                  "bg-muted text-muted-foreground"
-                }`}>{event.status}</span>
-              </div>
-              <h1 className="mt-3 font-display text-4xl font-bold sm:text-5xl">{event.name}</h1>
-              {event.description && <p className="mt-2 max-w-2xl text-muted-foreground">{event.description}</p>}
-              <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
-                <span className="flex items-center gap-1.5"><Calendar className="h-4 w-4" />{format(new Date(event.startDate), "PPP")}</span>
-                <span className="flex items-center gap-1.5"><MapPin className="h-4 w-4" />{event.venue}</span>
-                <span className="flex items-center gap-1.5"><Trophy className="h-4 w-4" />{fmtMoney(event.prizePool, event.currency)} prize pool</span>
-              </div>
+              <div>
+                <div className="flex items-center gap-3">
+                  {isNonSport ? (
+                    <span className="text-4xl">📋</span>
+                  ) : (
+                    <span className="text-4xl">{sportEmoji(event.sport)}</span>
+                  )}
+                  <span className="rounded-full border border-primary/30 bg-primary/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-primary">
+                    {isNonSport ? "Event" : sportLabel(event.sport)}
+                  </span>
+                  <span className={`rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest ${
+                    event.status === "live" ? "bg-destructive/20 text-destructive" :
+                    event.status === "published" ? "bg-success/20 text-success" :
+                    "bg-muted text-muted-foreground"
+                  }`}>{event.status}</span>
+                </div>
+                <h1 className="mt-3 font-display text-4xl font-bold sm:text-5xl">{event.name}</h1>
+                {event.description && <p className="mt-2 max-w-2xl text-muted-foreground">{event.description}</p>}
+                <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
+                  <span className="flex items-center gap-1.5"><Calendar className="h-4 w-4" />{format(new Date(event.startDate), "PPP")}</span>
+                  <span className="flex items-center gap-1.5"><MapPin className="h-4 w-4" />{event.venue}</span>
+                  {!isNonSport && (
+                    <span className="flex items-center gap-1.5"><Trophy className="h-4 w-4" />{fmtMoney(event.prizePool, event.currency)} prize pool</span>
+                  )}
+                </div>
             </div>
             <div className="flex flex-wrap gap-2">
               <Button onClick={() => setShareOpen(true)}><Share2 className="mr-1.5 h-4 w-4" /> Share QR</Button>
@@ -104,7 +111,7 @@ function EventDetail() {
         </div>
       </div>
 
-      {(() => {
+      {!isNonSport && (() => {
         const live = matchesApi.liveFor(eventId);
         if (!live) return null;
         return (
@@ -128,20 +135,30 @@ function EventDetail() {
       })()}
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <Stat label="Approved teams" value={`${approved} / ${event.maxTeams}`} icon={Users} />
-        <Stat label="Pending review" value={pending} icon={Users} accent="text-warning" />
+        {!isNonSport && (
+          <>
+            <Stat label="Approved teams" value={`${approved} / ${event.maxTeams}`} icon={Users} />
+            <Stat label="Pending review" value={pending} icon={Users} accent="text-warning" />
+          </>
+        )}
         <Stat label="Income" value={fmtMoney(income, event.currency)} icon={Trophy} accent="text-success" />
         <Stat label="Donations" value={fmtMoney(donationTotal, event.currency)} icon={Wallet} accent="text-accent" />
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
-        <ActionCard to="/app/registrations" search={{ event: eventId }} title="Manage registrations" desc={`${pending} pending • ${approved} approved`} />
-        <ActionCard to="/app/schedule" search={{ event: eventId }} title="Bracket & schedule" desc="Generate tie sheet from approved teams" />
+        {!isNonSport && (
+          <>
+            <ActionCard to="/app/registrations" search={{ event: eventId }} title="Manage registrations" desc={`${pending} pending • ${approved} approved`} />
+            <ActionCard to="/app/schedule" search={{ event: eventId }} title="Bracket & schedule" desc="Generate tie sheet from approved teams" />
+          </>
+        )}
         <ActionCard to="/app/budget" search={{ event: eventId }} title="Budget" desc={`Net: ${fmtMoney(income - expense, event.currency)}`} />
         <ActionCard to="/app/donations" search={{ event: eventId }} title="Donations" desc={`${fmtMoney(donationTotal, event.currency)} raised`} />
         <ActionCard to="/app/tickets" search={{ event: eventId }} title="Tickets" desc="Sell entry passes to public" />
-        <ActionCard to="/app/checkin" search={{ event: eventId }} title="Event-day check-in" desc="Verify teams at the gate" />
-        <ActionCard to="/register/$eventId" params={{ eventId }} title="Public registration page" desc="Preview what teams see" external />
+        <ActionCard to="/app/checkin" search={{ event: eventId }} title="Event-day check-in" desc="Verify tickets at the gate" />
+        {!isNonSport && (
+          <ActionCard to="/register/$eventId" params={{ eventId }} title="Public registration page" desc="Preview what teams see" external />
+        )}
         <ActionCard to="/tickets/$eventId" params={{ eventId }} title="Public ticket page" desc="Preview what attendees see" external />
       </div>
 

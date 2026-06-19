@@ -107,6 +107,7 @@ export type Database = {
           description: string
           end_date: string
           entry_fee: number
+          event_type: string
           id: string
           max_teams: number
           name: string
@@ -130,6 +131,7 @@ export type Database = {
           description?: string
           end_date: string
           entry_fee?: number
+          event_type?: string
           id: string
           max_teams?: number
           name: string
@@ -153,6 +155,7 @@ export type Database = {
           description?: string
           end_date?: string
           entry_fee?: number
+          event_type?: string
           id?: string
           max_teams?: number
           name?: string
