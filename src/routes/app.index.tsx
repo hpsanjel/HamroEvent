@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { eventsApi, regsApi, budgetApi, donationsApi } from "@/lib/store";
+import { eventsApi, regsApi, budgetApi } from "@/lib/store";
 import { useHydrated, useStoreSignal } from "@/hooks/use-store";
 import { Trophy, Users, Wallet, CalendarRange, Plus, ArrowRight, HeartHandshake } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -27,8 +27,7 @@ function Dashboard() {
   const totalsByCurrency = events.reduce<Record<string, number>>((acc, e) => {
     const cur = e.currency || "INR";
     const inc = budgetApi.list(e.id).filter((b) => b.type === "income").reduce((s, i) => s + i.amount, 0);
-    const dn = donationsApi.list(e.id).reduce((s, d) => s + d.amount, 0);
-    acc[cur] = (acc[cur] ?? 0) + inc + dn;
+    acc[cur] = (acc[cur] ?? 0) + inc;
     return acc;
   }, {});
   const totalsLabel = Object.keys(totalsByCurrency).length === 0

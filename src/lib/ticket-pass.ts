@@ -6,7 +6,8 @@ import { format } from "date-fns";
 import { fmtMoney } from "./currency";
 
 export function ticketQrPayload(order: TicketOrder): string {
-  return JSON.stringify({ t: "ticket", id: order.id, e: order.eventId });
+  const params = new URLSearchParams({ e: order.eventId, n: order.buyerName });
+  return `${window.location.origin}/verify/ticket/${order.id}?${params}`;
 }
 
 export async function generateTicketPdf(event: SportsEvent, ticket: TicketType, order: TicketOrder): Promise<jsPDF> {

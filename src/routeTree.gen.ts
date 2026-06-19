@@ -25,7 +25,10 @@ import { Route as AppDonationsRouteImport } from './routes/app.donations'
 import { Route as AppCheckinRouteImport } from './routes/app.checkin'
 import { Route as AppBudgetRouteImport } from './routes/app.budget'
 import { Route as AppEventsIndexRouteImport } from './routes/app.events.index'
+import { Route as VerifyTicketOrderIdRouteImport } from './routes/verify.ticket.$orderId'
+import { Route as VerifyTeamRegIdRouteImport } from './routes/verify.team.$regId'
 import { Route as AppEventsEventIdRouteImport } from './routes/app.events.$eventId'
+import { Route as VerifyPlayerRegIdPlayerIdxRouteImport } from './routes/verify.player.$regId.$playerIdx'
 
 const LookupRoute = LookupRouteImport.update({
   id: '/lookup',
@@ -107,11 +110,27 @@ const AppEventsIndexRoute = AppEventsIndexRouteImport.update({
   path: '/events/',
   getParentRoute: () => AppRoute,
 } as any)
+const VerifyTicketOrderIdRoute = VerifyTicketOrderIdRouteImport.update({
+  id: '/verify/ticket/$orderId',
+  path: '/verify/ticket/$orderId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VerifyTeamRegIdRoute = VerifyTeamRegIdRouteImport.update({
+  id: '/verify/team/$regId',
+  path: '/verify/team/$regId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AppEventsEventIdRoute = AppEventsEventIdRouteImport.update({
   id: '/events/$eventId',
   path: '/events/$eventId',
   getParentRoute: () => AppRoute,
 } as any)
+const VerifyPlayerRegIdPlayerIdxRoute =
+  VerifyPlayerRegIdPlayerIdxRouteImport.update({
+    id: '/verify/player/$regId/$playerIdx',
+    path: '/verify/player/$regId/$playerIdx',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -130,7 +149,10 @@ export interface FileRoutesByFullPath {
   '/tickets/$eventId': typeof TicketsEventIdRoute
   '/app/': typeof AppIndexRoute
   '/app/events/$eventId': typeof AppEventsEventIdRoute
+  '/verify/team/$regId': typeof VerifyTeamRegIdRoute
+  '/verify/ticket/$orderId': typeof VerifyTicketOrderIdRoute
   '/app/events/': typeof AppEventsIndexRoute
+  '/verify/player/$regId/$playerIdx': typeof VerifyPlayerRegIdPlayerIdxRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -148,7 +170,10 @@ export interface FileRoutesByTo {
   '/tickets/$eventId': typeof TicketsEventIdRoute
   '/app': typeof AppIndexRoute
   '/app/events/$eventId': typeof AppEventsEventIdRoute
+  '/verify/team/$regId': typeof VerifyTeamRegIdRoute
+  '/verify/ticket/$orderId': typeof VerifyTicketOrderIdRoute
   '/app/events': typeof AppEventsIndexRoute
+  '/verify/player/$regId/$playerIdx': typeof VerifyPlayerRegIdPlayerIdxRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -168,7 +193,10 @@ export interface FileRoutesById {
   '/tickets/$eventId': typeof TicketsEventIdRoute
   '/app/': typeof AppIndexRoute
   '/app/events/$eventId': typeof AppEventsEventIdRoute
+  '/verify/team/$regId': typeof VerifyTeamRegIdRoute
+  '/verify/ticket/$orderId': typeof VerifyTicketOrderIdRoute
   '/app/events/': typeof AppEventsIndexRoute
+  '/verify/player/$regId/$playerIdx': typeof VerifyPlayerRegIdPlayerIdxRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -189,7 +217,10 @@ export interface FileRouteTypes {
     | '/tickets/$eventId'
     | '/app/'
     | '/app/events/$eventId'
+    | '/verify/team/$regId'
+    | '/verify/ticket/$orderId'
     | '/app/events/'
+    | '/verify/player/$regId/$playerIdx'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -207,7 +238,10 @@ export interface FileRouteTypes {
     | '/tickets/$eventId'
     | '/app'
     | '/app/events/$eventId'
+    | '/verify/team/$regId'
+    | '/verify/ticket/$orderId'
     | '/app/events'
+    | '/verify/player/$regId/$playerIdx'
   id:
     | '__root__'
     | '/'
@@ -226,7 +260,10 @@ export interface FileRouteTypes {
     | '/tickets/$eventId'
     | '/app/'
     | '/app/events/$eventId'
+    | '/verify/team/$regId'
+    | '/verify/ticket/$orderId'
     | '/app/events/'
+    | '/verify/player/$regId/$playerIdx'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -236,6 +273,9 @@ export interface RootRouteChildren {
   LookupRoute: typeof LookupRoute
   RegisterEventIdRoute: typeof RegisterEventIdRoute
   TicketsEventIdRoute: typeof TicketsEventIdRoute
+  VerifyTeamRegIdRoute: typeof VerifyTeamRegIdRoute
+  VerifyTicketOrderIdRoute: typeof VerifyTicketOrderIdRoute
+  VerifyPlayerRegIdPlayerIdxRoute: typeof VerifyPlayerRegIdPlayerIdxRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -352,12 +392,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppEventsIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/verify/ticket/$orderId': {
+      id: '/verify/ticket/$orderId'
+      path: '/verify/ticket/$orderId'
+      fullPath: '/verify/ticket/$orderId'
+      preLoaderRoute: typeof VerifyTicketOrderIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/verify/team/$regId': {
+      id: '/verify/team/$regId'
+      path: '/verify/team/$regId'
+      fullPath: '/verify/team/$regId'
+      preLoaderRoute: typeof VerifyTeamRegIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/app/events/$eventId': {
       id: '/app/events/$eventId'
       path: '/events/$eventId'
       fullPath: '/app/events/$eventId'
       preLoaderRoute: typeof AppEventsEventIdRouteImport
       parentRoute: typeof AppRoute
+    }
+    '/verify/player/$regId/$playerIdx': {
+      id: '/verify/player/$regId/$playerIdx'
+      path: '/verify/player/$regId/$playerIdx'
+      fullPath: '/verify/player/$regId/$playerIdx'
+      preLoaderRoute: typeof VerifyPlayerRegIdPlayerIdxRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }
@@ -399,6 +460,9 @@ const rootRouteChildren: RootRouteChildren = {
   LookupRoute: LookupRoute,
   RegisterEventIdRoute: RegisterEventIdRoute,
   TicketsEventIdRoute: TicketsEventIdRoute,
+  VerifyTeamRegIdRoute: VerifyTeamRegIdRoute,
+  VerifyTicketOrderIdRoute: VerifyTicketOrderIdRoute,
+  VerifyPlayerRegIdPlayerIdxRoute: VerifyPlayerRegIdPlayerIdxRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -39,8 +39,9 @@ function EventDetail() {
   const regs = regsApi.list(eventId);
   const approved = regs.filter((r) => r.status === "approved").length;
   const pending = regs.filter((r) => r.status === "pending").length;
-  const income = budgetApi.list(eventId).filter((b) => b.type === "income").reduce((s, i) => s + i.amount, 0);
-  const expense = budgetApi.list(eventId).filter((b) => b.type === "expense").reduce((s, i) => s + i.amount, 0);
+  const budgetItems = budgetApi.list(eventId);
+  const income = budgetItems.filter((b) => b.type === "income" && !b.id.startsWith("donation-")).reduce((s, i) => s + i.amount, 0);
+  const expense = budgetItems.filter((b) => b.type === "expense").reduce((s, i) => s + i.amount, 0);
   const donationTotal = donationsApi.list(eventId).reduce((s, d) => s + d.amount, 0);
 
   return (

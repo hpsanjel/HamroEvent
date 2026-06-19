@@ -136,6 +136,16 @@ export interface TicketOrder {
   submittedAt: string;
 }
 
+export interface Profile {
+  id: string;
+  email: string;
+  name: string;
+  role: "organizer" | "superadmin";
+  isActive: boolean;
+  createdAt: string;
+  lastLogin?: string;
+}
+
 // ---------- Cache ----------
 const cache = {
   events: [] as SportsEvent[],
@@ -145,6 +155,7 @@ const cache = {
   matches: [] as Match[],
   tickets: [] as TicketType[],
   orders: [] as TicketOrder[],
+  profiles: [] as Profile[],
 };
 
 let hydrated = false;
@@ -398,6 +409,29 @@ function orderToRow(o: TicketOrder) {
   };
 }
 
+function profileFromRow(r: any): Profile {
+  return {
+    id: r.id,
+    email: r.email ?? "",
+    name: r.name ?? "",
+    role: r.role ?? "organizer",
+    isActive: !!r.is_active,
+    createdAt: r.created_at ?? "",
+    lastLogin: r.last_login ?? undefined,
+  };
+}
+function profileToRow(p: Profile) {
+  return {
+    id: p.id,
+    email: p.email,
+    name: p.name,
+    role: p.role,
+    is_active: p.isActive,
+    created_at: p.createdAt,
+    last_login: p.lastLogin ?? null,
+  };
+}
+
 // ---------- Hydrate ----------
 export async function hydrateStore() {
   console.log('[Store] hydrateStore called, hydrated:', hydrated, 'hydrating:', !!hydrating);
@@ -430,7 +464,7 @@ export async function hydrateStore() {
         setTimeout(() => reject(new Error("Hydration timeout")), 5000), // Reduced from 10s to 5s
       );
 
-      const [ev, rg, bg, dn, mt, tk, od] = await Promise.race([
+      const [ev, rg, bg, dn, mt, tk, od, pr] = await Promise.race([
         Promise.allSettled([
           supabase.from("events").select("*"),
           supabase.from("registrations").select("*"),
@@ -439,6 +473,7 @@ export async function hydrateStore() {
           supabase.from("matches").select("*"),
           supabase.from("tickets").select("*"),
           supabase.from("ticket_orders").select("*"),
+          supabase.from("profiles").select("*"),
         ]),
         timeout as any,
       ]);
@@ -453,6 +488,7 @@ export async function hydrateStore() {
       cache.matches = (mt.status === "fulfilled" ? (mt.value.data ?? []) : []).map(matchFromRow);
       cache.tickets = (tk.status === "fulfilled" ? (tk.value.data ?? []) : []).map(ticketFromRow);
       cache.orders = (od.status === "fulfilled" ? (od.value.data ?? []) : []).map(orderFromRow);
+      cache.profiles = (pr.status === "fulfilled" ? (pr.value.data ?? []) : []).map(profileFromRow);
 
       console.log('[Store] Cache populated - Events:', cache.events.length, 'Regs:', cache.regs.length);
 
@@ -525,6 +561,10 @@ function applyChange(table: string, payload: any) {
       cache.orders = apply(cache.orders, rowNew ? orderFromRow(rowNew) : null, rowOld?.id);
       emit("orders");
       break;
+    case "profiles":
+      cache.profiles = apply(cache.profiles, rowNew ? profileFromRow(rowNew) : null, rowOld?.id);
+      emit("profiles");
+      break;
   }
 }
 
@@ -553,7 +593,12 @@ if (typeof window !== "undefined") {
 
 function fireAndForget<T>(p: PromiseLike<T>, label: string) {
   Promise.resolve(p).then((r: any) => {
-    if (r?.error) console.error(`[pp] ${label}:`, r.error);
+    if (r?.error) {
+      console.error(`[pp] ${label}:`, r.error);
+      console.warn(`[pp] ${label} failed — data may not be synced to Supabase`);
+    }
+  }).catch((err) => {
+    console.error(`[pp] ${label} rejected:`, err);
   });
 }
 
@@ -664,7 +709,7 @@ export const budgetApi = {
         eventId: donation.eventId,
         ownerId: donation.ownerId,
         type: 'income' as const,
-        category: `Donation from ${donation.donorName || 'Anonymous'}`,
+        category: `Donation from ${donation.donor || 'Anonymous'}`,
         amount: donation.amount,
         note: donation.note,
         date: donation.date,
@@ -773,13 +818,26 @@ export const ordersApi = {
   upsert: (o: TicketOrder) => {
     cache.orders = [...cache.orders.filter((x) => x.id !== o.id), o];
     emit("orders");
-    fireAndForget(supabase.from("ticket_orders").upsert(orderToRow(o)), "orders.upsert");
+    const promise = supabase.from("ticket_orders").upsert(orderToRow(o));
+    return promise.then((r: any) => {
+      if (r?.error) console.error(`[pp] orders.upsert:`, r.error);
+      return r;
+    }).catch((err) => {
+      console.error(`[pp] orders.upsert rejected:`, err);
+      return { error: err, data: null };
+    });
   },
   remove: (id: string) => {
     cache.orders = cache.orders.filter((o) => o.id !== id);
     emit("orders");
     fireAndForget(supabase.from("ticket_orders").delete().eq("id", id), "orders.remove");
   },
+};
+
+export const profilesApi = {
+  list: (): Profile[] => [...cache.profiles].sort((a, b) => a.email.localeCompare(b.email)),
+  get: (id: string) => cache.profiles.find((p) => p.id === id),
+  getByEmail: (email: string) => cache.profiles.find((p) => p.email === email),
 };
 
 // ---------- Superadmin APIs (access all data without user filtering) ----------
@@ -804,6 +862,9 @@ export const superAdminApi = {
   
   // Get all matches without user filtering
   getAllMatches: (): Match[] => [...cache.matches].sort((a, b) => a.round - b.round || a.matchNo - b.matchNo),
+  
+  // Get all profiles without user filtering
+  getAllProfiles: (): Profile[] => [...cache.profiles].sort((a, b) => a.email.localeCompare(b.email)),
 };
 
 export function generateBracket(eventId: string, teams: string[]): Match[] {

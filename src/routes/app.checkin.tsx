@@ -50,40 +50,59 @@ function CheckinPage() {
 
   const handleScan = useCallback((text: string) => {
     console.log('[CheckinPage] handleScan called with:', text);
-    console.log('[CheckinPage] lastScan:', lastScan);
     if (lastScan === text) {
       console.log('[CheckinPage] Duplicate scan detected, ignoring');
       return;
     }
     setLastScan(text);
     setTimeout(() => setLastScan(null), 2500);
+
+    // Try to parse as URL first (new format), fallback to JSON (legacy)
+    let type: string | null = null;
+    let id: string | null = null;
+    let playerIdx: number | undefined;
+
     try {
-      const data = JSON.parse(text);
-      console.log('[CheckinPage] Parsed QR data:', data);
-      if (data.t === "ticket") {
-        console.log('[CheckinPage] Processing ticket:', data.id);
-        const o = ordersApi.get(data.id);
-        if (!o) return toast.error("Ticket not found");
-        if (o.status !== "approved") return toast.error("Ticket not approved");
-        if (o.checkedIn) return toast.message(`${o.buyerName} already checked in`);
-        ordersApi.upsert({ ...o, checkedIn: true });
-        toast.success(`✓ ${o.buyerName} (ticket) checked in`);
-      } else if (data.t === "team" || data.t === "player") {
-        console.log('[CheckinPage] Processing team/player:', data.id);
-        const r = regsApi.get(data.id);
-        if (!r) return toast.error("Team not found");
-        if (r.status !== "approved") return toast.error("Team not approved");
-        if (r.checkedIn) return toast.message(`${r.teamName} already checked in`);
-        regsApi.upsert({ ...r, checkedIn: true });
-        const who = data.t === "player" ? `Player: ${r.players[data.p]?.name ?? "?"}` : "Team";
-        toast.success(`✓ ${r.teamName} (${who}) checked in`);
-      } else {
-        console.log('[CheckinPage] Unknown QR type:', data.t);
-        toast.error("Unknown QR");
+      const url = new URL(text);
+      const parts = url.pathname.split("/").filter(Boolean);
+      // /verify/{type}/{id} or /verify/{type}/{id}/{playerIdx}
+      if (parts[0] === "verify" && parts.length >= 3) {
+        type = parts[1];
+        id = parts[2];
+        if (parts.length >= 4) playerIdx = parseInt(parts[3], 10);
       }
-    } catch (error) {
-      console.error('[CheckinPage] Error parsing QR:', error);
-      toast.error("Invalid QR code");
+    } catch {
+      // Not a URL, try JSON
+      try {
+        const data = JSON.parse(text);
+        type = data.t;
+        id = data.id;
+        playerIdx = data.p;
+      } catch {
+        return toast.error("Invalid QR code");
+      }
+    }
+
+    if (!type || !id) return toast.error("Invalid QR code");
+
+    console.log('[CheckinPage] Parsed QR - type:', type, 'id:', id, 'playerIdx:', playerIdx);
+    if (type === "ticket") {
+      const o = ordersApi.get(id);
+      if (!o) return toast.error("Ticket not found");
+      if (o.status !== "approved") return toast.error("Ticket not approved");
+      if (o.checkedIn) return toast.message(`${o.buyerName} already checked in`);
+      ordersApi.upsert({ ...o, checkedIn: true });
+      toast.success(`✓ ${o.buyerName} (ticket) checked in`);
+    } else if (type === "team" || type === "player") {
+      const r = regsApi.get(id);
+      if (!r) return toast.error("Team not found");
+      if (r.status !== "approved") return toast.error("Team not approved");
+      if (r.checkedIn) return toast.message(`${r.teamName} already checked in`);
+      regsApi.upsert({ ...r, checkedIn: true });
+      const who = type === "player" ? `Player: ${r.players[playerIdx ?? -1]?.name ?? "?"}` : "Team";
+      toast.success(`✓ ${r.teamName} (${who}) checked in`);
+    } else {
+      toast.error("Unknown QR");
     }
   }, [lastScan]);
 

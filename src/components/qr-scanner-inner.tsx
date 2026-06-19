@@ -68,9 +68,12 @@ export function QrScannerInner({ onScan, onClose }: Props) {
       console.log('[QrScanner] Cleanup triggered');
       cancelled = true;
       const s = scannerRef.current;
+      scannerRef.current = null;
       if (s) {
         console.log('[QrScanner] Stopping scanner');
-        Promise.resolve(s.stop()).catch(() => {}).finally(() => { try { s.clear(); } catch {} });
+        try {
+          s.stop().catch(() => {}).finally(() => { try { s.clear(); } catch {} });
+        } catch {}
       }
     };
   }, []);

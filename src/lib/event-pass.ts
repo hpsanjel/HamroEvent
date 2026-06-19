@@ -6,10 +6,13 @@ import { format } from "date-fns";
 import { fmtMoney } from "./currency";
 
 export function teamQrPayload(reg: TeamRegistration): string {
-  return JSON.stringify({ t: "team", id: reg.id, e: reg.eventId });
+  const params = new URLSearchParams({ e: reg.eventId, n: reg.teamName });
+  return `${window.location.origin}/verify/team/${reg.id}?${params}`;
 }
 export function playerQrPayload(reg: TeamRegistration, playerIdx: number): string {
-  return JSON.stringify({ t: "player", id: reg.id, p: playerIdx, e: reg.eventId });
+  const name = reg.players[playerIdx]?.name || "Player";
+  const params = new URLSearchParams({ e: reg.eventId, n: name });
+  return `${window.location.origin}/verify/player/${reg.id}/${playerIdx}?${params}`;
 }
 
 // Generates a multi-page PDF with one event pass per player + a team master pass.

@@ -224,6 +224,44 @@ export type Database = {
           },
         ]
       }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          is_active: boolean
+          last_login: string | null
+          name: string
+          role: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string
+          id: string
+          is_active?: boolean
+          last_login?: string | null
+          name?: string
+          role?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          is_active?: boolean
+          last_login?: string | null
+          name?: string
+          role?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profiles_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       registrations: {
         Row: {
           captain_email: string

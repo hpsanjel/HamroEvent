@@ -251,7 +251,9 @@ function BuyDialog({ event, ticket, onClose, onDone }: { event: any; ticket: Tic
       checkedIn: false,
       submittedAt: new Date().toISOString(),
     };
-    ordersApi.upsert(order);
+    ordersApi.upsert(order).then((r: any) => {
+      if (r?.error) toast.error("Order sync to server failed: " + r.error.message);
+    });
     setBusy(false);
     onDone(order);
   }
