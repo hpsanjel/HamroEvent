@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Check, X, Users, Calendar, MapPin, Trophy, Plus, Wallet, HeartHandshake, ScanLine, Sparkles, Download, Radio, Ticket, Edit, Trash2, Shield, Settings, Cookie } from "lucide-react";
+import { Check, X, Users, Calendar, MapPin, Trophy, Plus, Wallet, HeartHandshake, ScanLine, Sparkles, Download, Radio, Ticket, Edit, Trash2, Cookie } from "lucide-react";
 import { format } from "date-fns";
 import { toast } from "sonner";
 import { sportEmoji, sportLabel } from "@/lib/sports";
@@ -16,8 +16,7 @@ import { fmtMoney, currencySymbol } from "@/lib/currency";
 // import { generateBracket } from "@/lib/match-scheduler"; // Commented out as file doesn't exist
 import { uid } from "@/lib/store";
 import AccessibilityWidget from "@/components/accessibility-widget";
-import PrivacyPolicy from "@/components/privacy-policy";
-import DataProtection from "@/components/data-protection";
+import Footer from "@/components/footer";
 
 export default function App() {
   useStoreSignal();
@@ -26,8 +25,6 @@ export default function App() {
   const [selectedEvent, setSelectedEvent] = useState<any | null>(null);
   const [activeTab, setActiveTab] = useState("overview");
   const [showCreateModal, setShowCreateModal] = useState(false);
-  const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
-  const [showDataProtection, setShowDataProtection] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     sport: "football" as "football" | "cricket" | "basketball",
@@ -133,12 +130,6 @@ export default function App() {
             </div>
             <nav className="flex gap-4">
               <Button variant="ghost" size="sm">Dashboard</Button>
-              <Button variant="ghost" size="sm" onClick={() => setShowPrivacyPolicy(true)}>
-                <Shield className="mr-1 h-3.5 w-3.5" /> Privacy
-              </Button>
-              <Button variant="ghost" size="sm" onClick={() => setShowDataProtection(true)}>
-                <Settings className="mr-1 h-3.5 w-3.5" /> Data Rights
-              </Button>
               <Button variant="outline" size="sm" onClick={() => setShowCreateModal(true)}>
                 <Plus className="mr-1 h-3.5 w-3.5" /> Create Event
               </Button>
@@ -580,25 +571,7 @@ export default function App() {
         </DialogContent>
       </Dialog>
 
-      
-      {showPrivacyPolicy && (
-        <div className="fixed inset-0 z-50 bg-background">
-          <div className="absolute top-4 left-4 z-60 bg-black text-white p-2 rounded">
-            Privacy Policy Modal - Click back button to close
-          </div>
-          <PrivacyPolicy onBack={() => setShowPrivacyPolicy(false)} />
-        </div>
-      )}
-      
-      {showDataProtection && (
-        <div className="fixed inset-0 z-50 bg-background">
-          <div className="absolute top-4 left-4 z-60 bg-black text-white p-2 rounded">
-            Data Protection Modal - Click back button to close
-          </div>
-          <DataProtection />
-        </div>
-      )}
-      
+      <Footer />
       <AccessibilityWidget />
     </div>
   );
